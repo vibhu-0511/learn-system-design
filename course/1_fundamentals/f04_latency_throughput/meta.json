@@ -1,0 +1,22 @@
+{
+  "id": "f04",
+  "title": "Latency & Throughput",
+  "subtitle": "Latency is what one request feels; throughput is what the system sustains",
+  "motto": "Waiting time explodes long before capacity runs out",
+  "coreAddition": "queueing model",
+  "keyInsight": "As utilization approaches 100%, latency grows without bound while throughput barely improves.",
+  "concerns": ["latency", "scalability"],
+  "uses": [],
+  "sourceNotes": ["01_fundamentals/latency_and_throughput.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Model one server as a single queue",
+      "description": "One arrival rate against one service rate is enough to show why latency curves up near capacity.",
+      "alternatives": "A multi-server or bursty-arrival model is closer to reality but hides the one relationship the chapter teaches."
+    }
+  ]
+}

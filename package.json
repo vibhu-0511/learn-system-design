@@ -1,0 +1,31 @@
+{
+  "name": "learn-system-design",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "index:vault": "node scripts/buildVaultIndex.mjs",
+    "extract": "node scripts/extractCourse.mjs",
+    "predev": "npm run index:vault && npm run extract",
+    "prebuild": "npm run index:vault && npm run extract",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.1",
+    "highlight.js": "^11.11.1",
+    "lucide-react": "^0.468.0",
+    "marked": "^18.0.2",
+    "mermaid": "^11.14.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "ts-fsrs": "^5.4.1",
+    "vite": "^7.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "vitest": "^4.1.8"
+  }
+}

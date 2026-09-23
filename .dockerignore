@@ -1,0 +1,37 @@
+# Don't ship dev-only files into the build context
+
+node_modules
+dist
+
+# Editor/OS scratch
+.git
+.github
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.err
+vite-dev.log
+vite-dev.err
+
+# Local-only overrides
+.env
+.env.local
+.env.*.local
+vault.config.local.mjs
+
+# Claude Code session state
+.claude
+
+# Generated artefacts (rebuilt by the indexer inside the image)
+web/src/data/generated/
+web/public/course-assets/
+
+# Docs/screenshots that don't need to ship in the image
+docs/
+*.png
+*.jpg
+*.gif

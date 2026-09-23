@@ -1,0 +1,24 @@
+node_modules
+dist
+
+# Build output (rebuilt by predev / prebuild)
+web/src/data/generated
+web/public/course-assets
+
+# Local env and logs
+.env
+.env.local
+.env.*.local
+vault.config.local.mjs
+*.log
+*.err
+
+# Editor / OS scratch
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Claude Code: keep the shared launch config, ignore local state
+.claude/*
+!.claude/launch.json
