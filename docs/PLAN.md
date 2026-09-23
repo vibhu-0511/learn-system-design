@@ -179,7 +179,7 @@ The linking rule is one-directional. A chapter's `meta.json` references practice
 | Type | **Geist** (Google Fonts), 800 for display with tight tracking, 400/500 body; **Geist Mono** for code | |
 | Layout | content floats on the sky; centered measure; the app window has 20px rounded corners | |
 | Dark ("dusk") | sky `#141B27`, blush `#3A2838`, clouds white at 7%, glass white at 9%, ink `#F4F5F7`, ink-2 `#DDE1E6`, muted `#AEB5C0`, primary button inverts to white | |
-| Status | light: ok `#1E6B3F`, hot `#8A5A00`, overloaded `#A61B1B` · dusk: `#7FD6A4` / `#F6C35B` / `#F28B82` | separate from the theme ink |
+| Status | light: ok `#17593A`, hot `#734800`, overloaded `#A61B1B` · dusk: `#8FE0B0` / `#F6C35B` / `#FFB4AC` | separate from the theme ink. Tuned in P2 so each is ≥ 4.5:1 on glass, worst case (over a cloud, one or two glass layers) |
 
 These are the values from the approved preview v2.
 

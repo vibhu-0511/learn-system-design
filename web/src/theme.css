@@ -11,8 +11,8 @@
   --line: rgba(0, 0, 0, 0.14);
   --btn: #111418;
   --btn-text: #ffffff;
-  --ok: #1e6b3f;
-  --hot: #8a5a00;
+  --ok: #17593a;
+  --hot: #734800;
   --bad: #a61b1b;
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -30,9 +30,9 @@
   --line: rgba(255, 255, 255, 0.16);
   --btn: #f4f5f7;
   --btn-text: #0b0e13;
-  --ok: #7fd6a4;
+  --ok: #8fe0b0;
   --hot: #f6c35b;
-  --bad: #f28b82;
+  --bad: #ffb4ac;
   color-scheme: dark;
 }
 

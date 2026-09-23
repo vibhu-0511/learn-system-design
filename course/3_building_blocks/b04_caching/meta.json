@@ -1,0 +1,32 @@
+{
+  "id": "b04",
+  "title": "Caching",
+  "subtitle": "A cache is a bet that reads repeat",
+  "motto": "A cache is a bet on repetition",
+  "coreAddition": "cache-aside with TTL",
+  "keyInsight": "A cache shields the database only while reads repeat within the TTL, and a longer TTL buys hit rate with staleness.",
+  "concerns": ["latency", "scalability"],
+  "uses": ["f04"],
+  "sourceNotes": ["02_building_blocks/caching.md"],
+  "outageRefs": ["fastly_2021"],
+  "bugScenarioIds": ["photo-gallery-overload"],
+  "drillCaseIds": ["url-shortener"],
+  "terms": ["Cache"],
+  "decisions": [
+    {
+      "title": "Cache-aside, not write-through",
+      "description": "The application reads the cache first and fills it on a miss, so the cache holds only what is actually read and a cache outage makes reads slow rather than failing them.",
+      "alternatives": "Write-through keeps the cache fresh, but it writes every row twice, including rows nobody reads back."
+    },
+    {
+      "title": "Derive hit rate from the TTL",
+      "description": "The sim computes the hit rate from how often a key is read and the TTL, so moving the TTL slider changes both database load and staleness.",
+      "alternatives": "A fixed hit-rate slider is simpler but hides why the TTL matters, and cannot show the freshness cost."
+    },
+    {
+      "title": "Model the cold-start failure",
+      "description": "The failure frame restarts the cache empty, because a cache that helps on a normal day but sends full load to the database after a restart is the operational risk to learn.",
+      "alternatives": "Modeling a single hot-key expiry is closer to a stampede, but it needs a per-key traffic model that would bury the main idea."
+    }
+  ]
+}

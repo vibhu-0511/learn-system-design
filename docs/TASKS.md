@@ -31,8 +31,8 @@ It contains no code on purpose. Each task names the files, contracts and checks 
 
 | Phase | Status | Commit |
 |---|---|---|
-| P1 Scaffold | in progress (P1.1–P1.7, P1.9 done; P1.8 CI/Pages pending) | |
-| P2 Pilot (f04, b04, p10) ✋ | todo | |
+| P1 Scaffold | done. Exception: the live Pages URL check is deferred because the repo is private. `test.yml` is green on Linux. | `489b308`, `d994af0` |
+| P2 Pilot (f04, b04, p10) ✋ | done, **waiting for the user's review** before any P3/P4 work | see git log |
 | P3 Port gym + Library | todo | |
 | P4-F Fundamentals (8) | todo | |
 | P4-E Evolutions (4) | todo | |
@@ -64,6 +64,24 @@ These differ from what PLAN.md or the tasks below say. Where they conflict, **th
 10. **Preview tooling caveat.** The browser tool's `preview_start` with a config *name* read `personal/.claude/launch.json` (a different project's Forge dev server) instead of this project's. Start the site with `npm run dev` yourself, then open `http://localhost:5173` with `preview_start` using a `url`. Stop any wrong server it started.
 11. **Sims must guard the CLI entry** without importing Node modules: see the placeholder `f04/sim.mjs` for the pattern that works in Node (including Windows paths) and in the browser. A contract test rejects `node:` imports and `require(`.
 12. **Git identity**: inside this folder the identity resolves to `vibhu-0511` with email `vibhanshu.0511@gmail.com` (from `personal/.gitconfig`).
+13. **Lockfile trap.** A lockfile generated on Windows after an earlier install can record Linux-incompatible platform packages (`@parcel/watcher-*`, pulled in through `@excalidraw/excalidraw` → `sass`) as *required*, so `npm ci` fails on the CI runner with `EBADPLATFORM`. If you change dependencies, regenerate with `npm install --package-lock-only`, then check that every lock entry with an `os` or `cpu` field is marked `optional`. Run a clean `npm ci` before pushing.
+14. **`deploy-pages.yml` is manual-only** (`workflow_dispatch`) while the repo is private. Restore the push trigger, as its comment says, once the repo is public and Pages is set to "GitHub Actions".
+
+### 0.5 P2 outcome and chapter recipe refinements (read before P4)
+
+The pilot is done: f04, b04 and p10 are written, pass the contract tests, and render on the site (`npm run dev`, then `#/f04`, `#/b04`, `#/p10`). Checked in the browser: all five tabs on b04, sliders drive the player and the comparison table, values persist across reload, dusk mode, no console errors, no horizontal overflow at 375 px. The recipe in P2.1 stands. These refinements came out of writing the three chapters:
+
+- **Write the sim first, then run it, then write the README from the real output.** Every number in a README (the Problem, When It Breaks, Trade-off, Try It) must come from running `node …/sim.mjs`. Verify each "Try It" claim by running the exact command.
+- **Check the story before you trust the model.** p10's first model gave two different bad policies the same tiny success rate, and a "peak load" metric that made the *good* policy look worse. Both were artefacts of an invented formula. Run the sim at several slider values; if a frame tells a confusing story, simplify the model instead of explaining it away.
+- **Metric keys drive the UI.** The player, the Simulate table and the hero read units from the key suffix: `Pct` (%), `Ms` (ms), `Rps` (req/s), `Sec` (s). Labels are made from the camelCase words, so name keys as a reader would say them (`dbLoadRps` reads "DB load", `dbRps` would read a bare "DB"). Metrics must be finite numbers. Only `*utilization*` (percent) and `dropped*` metrics are colored.
+- **Frame titles and notes are computed strings** built from the run parameters, so they stay true as the sliders move. Give every frame a title and a one-sentence note.
+- **One frame per beat** is the norm (four frames). Beats may not go backwards.
+- **A README excerpt is a fenced block whose first line is `// sim.mjs`.** The lines after it must appear contiguously in `sim.mjs`. Copy them; do not retype.
+- **The Learn tab starts at the first `##` heading.** The title line, breadcrumb, motto and concern line are shown in the page header instead, so they stay in the README for GitHub readers.
+- **Practice cards** currently show the id in words (for example "Url shortener"). Real titles arrive with P3.
+- **Custom heroes** live in `web/src/course/heroes/` and are registered in `heroes/index.js`. A hero receives `{ frame, params }`. Only b04 has one so far; the plan's others (e01, b05, p03, p13) land with their tracks.
+- **A shared `readStored`/`writeStored` pair in `store.js`** wraps localStorage in try/catch. Use it, not raw localStorage.
+- **Bundle:** the initial JS is about 76 KB gzipped. Mermaid and highlight.js are lazy chunks, which the build warns about (over 500 kB); that warning is expected and is P5.4's to review.
 
 ---
 

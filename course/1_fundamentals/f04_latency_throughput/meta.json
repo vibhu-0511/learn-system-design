@@ -3,20 +3,30 @@
   "title": "Latency & Throughput",
   "subtitle": "Latency is what one request feels; throughput is what the system sustains",
   "motto": "Waiting time explodes long before capacity runs out",
-  "coreAddition": "queueing model",
-  "keyInsight": "As utilization approaches 100%, latency grows without bound while throughput barely improves.",
+  "coreAddition": "queue with workers",
+  "keyInsight": "Latency is waiting time plus work time, and waiting time grows without bound as utilization approaches 100%.",
   "concerns": ["latency", "scalability"],
   "uses": [],
   "sourceNotes": ["01_fundamentals/latency_and_throughput.md"],
   "outageRefs": [],
   "bugScenarioIds": [],
   "drillCaseIds": [],
-  "terms": [],
+  "terms": ["Latency", "Throughput"],
   "decisions": [
     {
-      "title": "Model one server as a single queue",
-      "description": "One arrival rate against one service rate is enough to show why latency curves up near capacity.",
-      "alternatives": "A multi-server or bursty-arrival model is closer to reality but hides the one relationship the chapter teaches."
+      "title": "Report p99 next to the average",
+      "description": "Every frame shows the average and the p99 latency, so learners see the tail that an average hides.",
+      "alternatives": "Showing only the average is simpler, but it repeats the exact mistake the chapter warns about."
+    },
+    {
+      "title": "One shared queue in front of the workers",
+      "description": "A single queue with a pool of workers keeps the model to one formula while still showing the utilization cliff.",
+      "alternatives": "A separate queue per worker or a bursty arrival process is closer to some real systems, but it hides the one relationship the chapter teaches."
+    },
+    {
+      "title": "Show batching at quiet-hour traffic",
+      "description": "Batch fill time is worst when traffic is light, so the trade-off frame measures there to make the latency cost visible.",
+      "alternatives": "Measuring at peak load makes batching look free, because batches fill instantly when traffic is heavy."
     }
   ]
 }

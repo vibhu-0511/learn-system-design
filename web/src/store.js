@@ -22,6 +22,8 @@ function write(key, value) {
   }
 }
 
+export { read as readStored, write as writeStored };
+
 export function useLocal(key, initial) {
   const [value, setValue] = useState(() => read(key, initial));
   useEffect(() => write(key, value), [key, value]);

@@ -1,0 +1,32 @@
+{
+  "id": "p10",
+  "title": "Retry with Backoff and Jitter",
+  "subtitle": "Retries help until every client retries at the same moment",
+  "motto": "Spread the retries, or the retries become the outage",
+  "coreAddition": "backoff with full jitter",
+  "keyInsight": "Backoff spaces retries apart but only jitter stops clients that failed together from retrying together.",
+  "concerns": ["availability", "scalability"],
+  "uses": ["f04"],
+  "sourceNotes": ["03_design_patterns/retry_with_backoff.md"],
+  "outageRefs": ["openai_dns_2024"],
+  "bugScenarioIds": ["checkout-double-charge"],
+  "drillCaseIds": ["payment-system"],
+  "terms": ["Idempotency", "Circuit Breaker"],
+  "decisions": [
+    {
+      "title": "Full jitter, not equal or decorrelated jitter",
+      "description": "Each wait is a random value between zero and the doubled wait. It spreads clients across the widest range and is the variant the AWS guidance recommends.",
+      "alternatives": "Equal jitter guarantees a minimum wait, but it clusters retries in the upper half of the range and spreads load less."
+    },
+    {
+      "title": "Reject excess attempts instead of queueing them",
+      "description": "The simulated server serves what fits in each 100 ms tick and answers 503 to the rest, which is how an overloaded server without a queue behaves and makes synchronized waves visible.",
+      "alternatives": "A server with a deep queue absorbs the burst, which is realistic for some systems, but it hides the effect of retry timing that the chapter teaches."
+    },
+    {
+      "title": "Cap retries as the trade-off",
+      "description": "The trade-off frame limits retries to 2, so learners see that fewer retries mean less extra load and more clients giving up.",
+      "alternatives": "Simulating a retry budget across the whole client population is closer to production, but it needs shared state between clients that the simple model does not have."
+    }
+  ]
+}

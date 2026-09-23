@@ -14,6 +14,14 @@ export function neighbors(id) {
   return { prev: c?.prev ? chapters[c.prev] : null, next: c?.next ? chapters[c.next] : null };
 }
 
+// Chapter bodies (README and sim source) are separate lazy chunks, loaded per lesson.
+const bodies = import.meta.glob("../data/generated/chapters/*.json");
+
+export async function loadBody(id) {
+  const load = bodies[`../data/generated/chapters/${id}.json`];
+  return load ? (await load()).default : null;
+}
+
 // Plain substring match over the fields a learner would type from.
 export function search(query, limit = 6) {
   const q = query.trim().toLowerCase();
