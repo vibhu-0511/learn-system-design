@@ -1,0 +1,27 @@
+{
+  "id": "p07",
+  "title": "Leader Election",
+  "subtitle": "Pick a new leader in a fraction of a second, and require a majority so two never rule at once",
+  "motto": "Exactly one leader, and only while a majority agrees",
+  "coreAddition": "quorum-based election",
+  "keyInsight": "Election replaces a 15-minute manual fix with a sub-second failover, and a majority requirement stops split brain at the price of refusing writes on the minority side.",
+  "concerns": ["availability", "consistency"],
+  "uses": ["p02", "f06"],
+  "sourceNotes": ["03_design_patterns/leader_election.md"],
+  "outageRefs": ["github_db_2018"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Show two leaders as the failure",
+      "description": "The failure frame counts the seconds with two leaders and the conflicting writes they accept, which is the vault's split-brain scenario made numeric.",
+      "alternatives": "Describing split brain in words would not show how many writes it corrupts."
+    },
+    {
+      "title": "Price the majority rule in rejected writes",
+      "description": "The last frame charges the minority side's writes to the fix, so the availability cost of quorum is visible next to the conflicts it removes.",
+      "alternatives": "Presenting quorum as free would hide that the cut-off side goes dark."
+    }
+  ]
+}

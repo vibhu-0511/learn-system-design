@@ -1,0 +1,27 @@
+{
+  "id": "p05",
+  "title": "Write-Ahead Log",
+  "subtitle": "Log the change to disk before you apply it, and choose how often to force that log to disk",
+  "motto": "Write it down first, then do it",
+  "coreAddition": "append-only log with fsync",
+  "keyInsight": "A write-ahead log makes a crash recoverable by replay, and how often you fsync decides how many acknowledged writes a crash can still lose.",
+  "concerns": ["availability", "latency"],
+  "uses": ["b02", "p01"],
+  "sourceNotes": ["03_design_patterns/write_ahead_log.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Show the log without fsync as the failure",
+      "description": "The failure frame keeps the log but skips the forced flush, because that is the setting that looks safe and still loses acknowledged writes.",
+      "alternatives": "Stopping at 'we have a WAL' would hide that durability depends on fsync."
+    },
+    {
+      "title": "Report fsync demand against the disk",
+      "description": "The fsync-busy metric goes above 100% when commits ask for more forced flushes than the disk can do, which motivates group commit.",
+      "alternatives": "Showing only commit latency would not explain why real databases batch their fsyncs."
+    }
+  ]
+}

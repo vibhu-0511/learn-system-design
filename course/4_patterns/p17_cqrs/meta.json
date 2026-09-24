@@ -1,0 +1,27 @@
+{
+  "id": "p17",
+  "title": "CQRS",
+  "subtitle": "Give reads their own denormalised model, and accept that it trails the writes",
+  "motto": "Reads and writes want different shapes, so give each its own",
+  "coreAddition": "separate read model with a projector",
+  "keyInsight": "Separating the read model makes reads a single cheap lookup and frees the write side, but it is eventually consistent, so a burst of writes can leave readers seeing old data for seconds.",
+  "concerns": ["latency", "consistency"],
+  "uses": ["p01", "p16"],
+  "sourceNotes": ["03_design_patterns/cqrs.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Fail with a write burst",
+      "description": "The failure frame sends more writes than the projector can copy, so the read model's lag appears as a backlog with a number of seconds.",
+      "alternatives": "Quoting 'eventual consistency' without a number would not show how stale a read can get."
+    },
+    {
+      "title": "Fix with reading your own writes",
+      "description": "The last frame routes a few reads to the write side, and shows the extra write-side load that it costs.",
+      "alternatives": "Making the projector synchronous would hide the lag but remove the benefit of the split."
+    }
+  ]
+}

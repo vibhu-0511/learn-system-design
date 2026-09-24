@@ -1,0 +1,27 @@
+{
+  "id": "p04",
+  "title": "Consistent Hashing",
+  "subtitle": "A hash ring moves a few keys when a node joins, and virtual nodes even out who holds them",
+  "motto": "Change the cluster, not the map",
+  "coreAddition": "hash ring with virtual nodes",
+  "keyInsight": "Hashing keys onto a ring means adding a node moves only its neighbour's keys, and many virtual nodes per machine keep the shares even.",
+  "concerns": ["scalability", "availability"],
+  "uses": ["p03", "b04"],
+  "sourceNotes": ["03_design_patterns/consistent_hashing.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Run the real hash, not a formula",
+      "description": "The sim places actual keys and nodes with a fixed hash, so the moved and imbalance numbers come from a run and not from 1/(n+1).",
+      "alternatives": "Quoting the theory (K/n keys move) would hide how uneven one point per node really is."
+    },
+    {
+      "title": "Show the unevenness before the fix",
+      "description": "The failure frame reports the busiest node's share with one point each, so virtual nodes arrive as an answer to a measured problem.",
+      "alternatives": "Introducing virtual nodes up front would present them as decoration."
+    }
+  ]
+}

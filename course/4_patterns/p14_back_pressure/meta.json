@@ -1,0 +1,27 @@
+{
+  "id": "p14",
+  "title": "Back Pressure",
+  "subtitle": "Refuse work you cannot finish in time, so a surge becomes rejected requests instead of a crash",
+  "motto": "Say no early, or fail late",
+  "coreAddition": "bounded queue with load shedding",
+  "keyInsight": "An unbounded queue turns a surge into memory growth and useless work; a queue sized to the client timeout sheds the excess while everything it accepts is still worth doing.",
+  "concerns": ["availability", "latency"],
+  "uses": ["b05", "b09"],
+  "sourceNotes": ["03_design_patterns/back_pressure.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["iot-ingest-overload"],
+  "drillCaseIds": [],
+  "terms": ["Back Pressure"],
+  "decisions": [
+    {
+      "title": "Count work done for abandoned clients",
+      "description": "The sim reports the share of work spent on requests whose client already timed out, because a long queue looks busy while producing nothing useful.",
+      "alternatives": "Reporting throughput alone would make a full queue look healthy."
+    },
+    {
+      "title": "Size the queue from the timeout",
+      "description": "The last frame sets the limit to capacity times the client timeout, the largest queue whose every item is still worth serving.",
+      "alternatives": "Picking a round number such as 10,000 would ignore how long clients wait."
+    }
+  ]
+}

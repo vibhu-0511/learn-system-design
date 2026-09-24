@@ -1,0 +1,27 @@
+{
+  "id": "p02",
+  "title": "Replication",
+  "subtitle": "Copies keep data alive and reads fast, but the speed of keeping them in step decides what a crash loses",
+  "motto": "Keep more than one copy, and know how far behind each one is",
+  "coreAddition": "primary with replicas",
+  "keyInsight": "Asynchronous replication is fast but loses the writes still in flight when the primary fails; synchronous replication loses none but makes every write wait.",
+  "concerns": ["availability", "consistency"],
+  "uses": ["b02", "f06"],
+  "sourceNotes": ["03_design_patterns/replication.md"],
+  "outageRefs": ["github_db_2018"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Show data loss as the failure",
+      "description": "The failure frame spikes the lag and then fails the primary, so the cost of asynchronous replication appears as a count of lost writes.",
+      "alternatives": "Showing only the read-scaling benefit would leave out what a failover can cost."
+    },
+    {
+      "title": "Put write latency next to writes lost",
+      "description": "The last frame shows that zero lost writes is paid for in write latency, with both numbers in the same frame.",
+      "alternatives": "Presenting synchronous replication as simply safer would hide that one slow replica stalls every write."
+    }
+  ]
+}

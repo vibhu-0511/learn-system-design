@@ -1,0 +1,27 @@
+{
+  "id": "p06",
+  "title": "Bloom Filters",
+  "subtitle": "A few bits per key answer 'definitely not here' cheaply, if you size them for the keys you will really store",
+  "motto": "Be sure about no, and only guess about yes",
+  "coreAddition": "Bloom filter in front of a store",
+  "keyInsight": "A Bloom filter never misses a present key and rarely wastes a lookup on an absent one, but it cannot grow, so it must be sized for the final key count.",
+  "concerns": ["latency", "cost"],
+  "uses": ["p01", "b04"],
+  "sourceNotes": ["03_design_patterns/bloom_filters.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["web-crawler"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Measure the false-positive rate on real keys",
+      "description": "The sim inserts keys and probes keys that were never inserted, then prints the theory beside the measurement so the formula is checked.",
+      "alternatives": "Quoting the formula alone would not show that the observed rate matches it."
+    },
+    {
+      "title": "Fail by over-filling",
+      "description": "The failure frame adds three times the planned keys, because a Bloom filter cannot resize and silently degrades when the key count is underestimated.",
+      "alternatives": "Showing only a well-sized filter would hide the most common production mistake."
+    }
+  ]
+}

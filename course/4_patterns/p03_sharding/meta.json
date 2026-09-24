@@ -1,0 +1,27 @@
+{
+  "id": "p03",
+  "title": "Sharding",
+  "subtitle": "Splitting data across machines scales writes, until one hot key lands on one shard",
+  "motto": "Split the data, then watch for the piece everyone wants",
+  "coreAddition": "hash and range shards",
+  "keyInsight": "A shard key decides both how evenly load spreads and how cheap range queries are, and no key gets you both.",
+  "concerns": ["scalability", "latency"],
+  "uses": ["b02", "b03", "p01"],
+  "sourceNotes": ["03_design_patterns/sharding.md"],
+  "outageRefs": ["discord_db_2024"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Make the keys skewed on purpose",
+      "description": "The skew slider makes a few keys popular, since a hot shard is the usual way sharding fails and uniform keys would hide it.",
+      "alternatives": "Uniform keys would make hash sharding look perfect."
+    },
+    {
+      "title": "Compare hash and range on the same traffic",
+      "description": "Frames three and four use identical traffic, so the trade of scan cost against hot-spot load is the only difference.",
+      "alternatives": "Explaining the two schemes separately would not show they trade one weakness for another."
+    }
+  ]
+}

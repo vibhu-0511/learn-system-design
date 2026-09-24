@@ -1,0 +1,27 @@
+{
+  "id": "p01",
+  "title": "Database Indexing",
+  "subtitle": "One index turns a 3-second scan into 3 milliseconds, and every extra index taxes each write",
+  "motto": "Index what you look up, and only what you look up",
+  "coreAddition": "B-tree index",
+  "keyInsight": "An index trades write cost and space for read speed, and it only helps queries that pick out a small share of the table.",
+  "concerns": ["latency", "cost"],
+  "uses": ["b02"],
+  "sourceNotes": ["03_design_patterns/database_indexing.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["search-via-sql"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Show an index that loses",
+      "description": "The failure frame runs the index on a query returning 30% of rows, where random fetches make it slower than a scan.",
+      "alternatives": "Showing only the equality lookup would suggest an index never hurts a read."
+    },
+    {
+      "title": "Count writes, not just reads",
+      "description": "The last frame reports write amplification, because each index is one more write per row change.",
+      "alternatives": "Reporting read latency alone would hide the cost that grows with every index added."
+    }
+  ]
+}

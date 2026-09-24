@@ -1,0 +1,27 @@
+{
+  "id": "p11",
+  "title": "Idempotency",
+  "subtitle": "Give each request a key so a retry returns the first result instead of charging twice",
+  "motto": "Do it once, no matter how many times you are asked",
+  "coreAddition": "idempotency key with atomic claim",
+  "keyInsight": "Retries are only safe if repeating a request changes nothing, which needs a key the server claims atomically and remembers for as long as clients might retry.",
+  "concerns": ["consistency", "availability"],
+  "uses": ["p10", "f03"],
+  "sourceNotes": ["03_design_patterns/idempotency.md"],
+  "outageRefs": ["knight_capital_2012"],
+  "bugScenarioIds": ["checkout-double-charge"],
+  "drillCaseIds": ["payment-system"],
+  "terms": ["Idempotency"],
+  "decisions": [
+    {
+      "title": "Start from the double charge",
+      "description": "The first frame shows retries without a key charging customers twice, in dollars, so the pattern is motivated by a cost.",
+      "alternatives": "Starting from the definition of idempotence would not show why retries make it matter."
+    },
+    {
+      "title": "Include the check-then-write race",
+      "description": "The failure frame lets some retries overlap the first attempt, since a key that is read and then written in two steps still lets duplicates through.",
+      "alternatives": "Showing only a key that works would hide that the claim has to be one atomic step."
+    }
+  ]
+}

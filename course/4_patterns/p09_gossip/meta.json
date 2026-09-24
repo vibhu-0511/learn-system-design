@@ -1,0 +1,27 @@
+{
+  "id": "p09",
+  "title": "Gossip Protocol",
+  "subtitle": "News spreads through random whispers in about log N rounds, with no coordinator to lose",
+  "motto": "Tell a few, and let them tell a few",
+  "coreAddition": "gossip dissemination",
+  "keyInsight": "Gossip reaches every node in a handful of rounds with no single point of failure, but it sends far more messages than a central broadcast and leaves nodes briefly disagreeing.",
+  "concerns": ["scalability", "availability"],
+  "uses": ["p07", "b11"],
+  "sourceNotes": ["03_design_patterns/gossip_protocol.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Compare with a central monitor honestly",
+      "description": "The first frame is a working central broadcast, so the sim shows gossip sending about eight times more messages, and the win is in the busiest node and in surviving failures.",
+      "alternatives": "Pitting gossip against a broken baseline would hide its message cost."
+    },
+    {
+      "title": "Use a seeded random generator",
+      "description": "Random peer choice is real randomness, drawn from a fixed seed so the rounds and message counts repeat exactly.",
+      "alternatives": "An averaged formula for rounds would hide that a lossy network takes visibly longer."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "p13",
+  "title": "Bulkhead Pattern",
+  "subtitle": "Give each dependency its own compartment so one hung call cannot sink the whole service",
+  "motto": "Let one compartment flood, and keep the ship afloat",
+  "coreAddition": "per-dependency resource pools",
+  "keyInsight": "Separate pools turn a hung dependency from a service-wide outage into a local one, but idle capacity in one pool cannot help another, so each pool has to be sized.",
+  "concerns": ["availability", "cost"],
+  "uses": ["p12", "b08"],
+  "sourceNotes": ["03_design_patterns/bulkhead_pattern.md"],
+  "outageRefs": ["aws_us_east_2021"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Measure the healthy dependencies' failures",
+      "description": "The metric that matters is how many requests to healthy dependencies fail, since that is the harm a shared pool spreads and a bulkhead contains.",
+      "alternatives": "Counting total failures alone would hide that the bulkhead's remaining failures all belong to the broken dependency."
+    },
+    {
+      "title": "Fail the bulkhead with a spike",
+      "description": "The failure frame sends a healthy dependency too much traffic to show a tight compartment rejecting requests while other pools sit idle.",
+      "alternatives": "Showing only the hung-dependency win would present isolation as free."
+    }
+  ]
+}

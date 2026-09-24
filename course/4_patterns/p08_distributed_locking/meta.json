@@ -1,0 +1,27 @@
+{
+  "id": "p08",
+  "title": "Distributed Locking",
+  "subtitle": "A lease lock stops double work, and a fencing token stops the holder that paused too long",
+  "motto": "A lock you cannot check at write time is only a hint",
+  "coreAddition": "lease lock with fencing tokens",
+  "keyInsight": "A lock with an expiry can be lost while its holder is paused, so the storage must check a fencing token, or a stale holder will still write.",
+  "concerns": ["consistency", "availability"],
+  "uses": ["p07", "b04"],
+  "sourceNotes": ["03_design_patterns/distributed_locking.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["checkout-double-charge"],
+  "drillCaseIds": ["ticketmaster"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Make the failure a pause, not a crash",
+      "description": "The failure frame pauses a live holder past its lease, since a crashed holder is easy and the hard case is one that wakes up and keeps writing.",
+      "alternatives": "Showing only a crash would suggest an expiring lease is enough."
+    },
+    {
+      "title": "Put the check in the storage",
+      "description": "The last frame rejects stale tokens at the resource, because the holder cannot be trusted to know it lost the lock.",
+      "alternatives": "Asking the holder to re-check the lock before each write still leaves a window between the check and the write."
+    }
+  ]
+}

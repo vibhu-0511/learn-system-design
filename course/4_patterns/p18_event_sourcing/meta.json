@@ -1,0 +1,27 @@
+{
+  "id": "p18",
+  "title": "Event Sourcing",
+  "subtitle": "Keep every change as an event and derive the state, and use snapshots so replays stay short",
+  "motto": "Store what happened, and work out what is true",
+  "coreAddition": "append-only event log with snapshots",
+  "keyInsight": "Event sourcing gives a full audit trail and the ability to rebuild any view, at about a hundred times the storage of current state and a replay time that grows until snapshots cap it.",
+  "concerns": ["consistency", "cost"],
+  "uses": ["p05", "p17"],
+  "sourceNotes": ["03_design_patterns/event_sourcing.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["payment-system"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Report the storage next to the history",
+      "description": "Every frame shows storage and the number of events kept, so the audit trail is priced in gigabytes.",
+      "alternatives": "Praising the audit trail alone would hide that events take about a hundred times the space of one state row."
+    },
+    {
+      "title": "Fail with the account that never stops",
+      "description": "The failure frame replays a very active account from its first event, since the aggregate that grows without limit is what makes replay slow.",
+      "alternatives": "Showing only accounts with a few hundred events would make replay look free."
+    }
+  ]
+}

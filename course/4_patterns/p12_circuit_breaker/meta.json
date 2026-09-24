@@ -1,0 +1,27 @@
+{
+  "id": "p12",
+  "title": "Circuit Breaker",
+  "subtitle": "Stop calling a failing dependency, so its slowness does not eat every thread you have",
+  "motto": "Fail fast beats waiting to fail",
+  "coreAddition": "circuit breaker with fallback",
+  "keyInsight": "One slow dependency can use every worker thread and fail requests that never touch it; a breaker fails those calls in a millisecond instead, and its open time decides how fast you recover.",
+  "concerns": ["availability", "latency"],
+  "uses": ["p10", "b08"],
+  "sourceNotes": ["03_design_patterns/circuit_breaker.md"],
+  "outageRefs": ["aws_us_east_2021"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": ["Circuit Breaker"],
+  "decisions": [
+    {
+      "title": "Fail requests that never touch the dependency",
+      "description": "The first frame counts failures across all requests, including the half that do not call the dependency, because a saturated thread pool takes those down too.",
+      "alternatives": "Counting only dependency calls would understate the damage a slow dependency does."
+    },
+    {
+      "title": "Charge the breaker for staying open too long",
+      "description": "The failure frame counts seconds the breaker rejects calls after the dependency has recovered, since the open time is the one setting it can get wrong.",
+      "alternatives": "Showing the breaker only working would hide that it can hurt a healthy service."
+    }
+  ]
+}

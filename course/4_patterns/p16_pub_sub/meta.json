@@ -1,0 +1,27 @@
+{
+  "id": "p16",
+  "title": "Publish and Subscribe",
+  "subtitle": "Publish an event once and let any number of subscribers pick it up, as long as they can keep up",
+  "motto": "Announce it once, and let whoever cares listen",
+  "coreAddition": "broker with topics and consumer groups",
+  "keyInsight": "A broker cuts the publisher's work to one send and decouples it from its subscribers, but it moves the problems to consumer lag, duplicate deliveries and the broker itself.",
+  "concerns": ["scalability", "availability"],
+  "uses": ["b05", "p11"],
+  "sourceNotes": ["03_design_patterns/pub_sub.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["notification-firehose"],
+  "drillCaseIds": ["notification-service"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Start from a publisher that calls everyone",
+      "description": "The first frame is the tightly coupled signup service from the vault, with its latency growing with the number of subscribers.",
+      "alternatives": "Starting from a broker would not show what the pattern removes."
+    },
+    {
+      "title": "Fail with a slow subscriber, not a broken broker",
+      "description": "The failure frame lets one subscriber fall behind, since lag on one consumer is the everyday failure and one the publisher never sees.",
+      "alternatives": "Showing a broker outage would hide the more common, quieter problem."
+    }
+  ]
+}

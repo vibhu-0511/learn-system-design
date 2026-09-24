@@ -1,0 +1,27 @@
+{
+  "id": "p15",
+  "title": "Cell-Based Architecture",
+  "subtitle": "Split users across self-contained copies of the service so one bad deploy reaches only a slice of them",
+  "motto": "Make the blast radius a design choice",
+  "coreAddition": "cells behind a router with staged rollout",
+  "keyInsight": "Cells cut the share of users a failure can reach from all of them to one cell's share, but only if deploys go one cell at a time, and the isolation costs extra infrastructure and a slower rollout.",
+  "concerns": ["availability", "cost"],
+  "uses": ["p13", "p03"],
+  "sourceNotes": ["03_design_patterns/cell_based_architecture.md"],
+  "outageRefs": ["aws_s3_2017", "aws_us_east_2021"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Show cells failing to help",
+      "description": "The failure frame deploys to every cell at once, because isolation that a rollout policy bypasses is a cost with no benefit.",
+      "alternatives": "Presenting cells as automatically safe would leave out that the deploy process has to respect them."
+    },
+    {
+      "title": "Put the cost and the rollout time in the metrics",
+      "description": "Every frame reports an infrastructure cost index and the minutes a rollout takes, so the safety is priced in money and in speed.",
+      "alternatives": "Reporting only the blast radius would make more cells always look better."
+    }
+  ]
+}

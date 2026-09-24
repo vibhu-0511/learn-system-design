@@ -1,0 +1,27 @@
+{
+  "id": "p19",
+  "title": "Saga Pattern",
+  "subtitle": "Replace one big transaction with local steps and an undo for each, and make the undos safe to retry",
+  "motto": "If you cannot roll back, roll forward with an apology",
+  "coreAddition": "orchestrated saga with compensations",
+  "keyInsight": "A saga keeps a multi-service operation consistent by undoing completed steps when one fails, but the undos can fail too, so they must be idempotent and retried.",
+  "concerns": ["consistency", "availability"],
+  "uses": ["p11", "p16", "e04"],
+  "sourceNotes": ["03_design_patterns/saga_pattern.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["checkout-double-charge"],
+  "drillCaseIds": ["payment-system"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Fail the undo, not just the step",
+      "description": "The failure frame makes some compensations fail, because the weak point of a saga is the rollback that is itself a network call.",
+      "alternatives": "Showing compensations always working would present a saga as a transaction."
+    },
+    {
+      "title": "Count messages for both styles",
+      "description": "The last frame states the message count for orchestration and for choreography, so the choice is priced in traffic and in visibility of state.",
+      "alternatives": "Naming the two styles without numbers would not show that choreography sends fewer messages but hides the saga's progress."
+    }
+  ]
+}
