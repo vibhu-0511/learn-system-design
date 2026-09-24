@@ -1,0 +1,27 @@
+{
+  "id": "b07",
+  "title": "Blob Storage",
+  "subtitle": "Files belong in object storage, and the database keeps only the key",
+  "motto": "Store bytes where bytes are cheap, and keep the pointer where queries are",
+  "coreAddition": "object storage with presigned URLs",
+  "keyInsight": "Moving files out of the database shrinks its size and backups, but the bytes still cost you bandwidth until clients upload and download directly.",
+  "concerns": ["cost", "scalability"],
+  "uses": ["b02", "b06"],
+  "sourceNotes": ["02_building_blocks/blob_storage.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["photo-gallery-overload"],
+  "drillCaseIds": ["video-streaming"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Fail on the upload path, not the storage",
+      "description": "The failure frame shows uploads flowing through app servers, because moving the files is not enough if their bytes still take the same path.",
+      "alternatives": "Stopping at 'use object storage' would leave the common mistake of proxying every upload untouched."
+    },
+    {
+      "title": "Show cost and retrieval time together",
+      "description": "The cold tier frame reports both the saving and the minutes to read an archived image, since cheaper storage is slower to retrieve.",
+      "alternatives": "Reporting only the lower bill would make an archive tier look strictly better."
+    }
+  ]
+}

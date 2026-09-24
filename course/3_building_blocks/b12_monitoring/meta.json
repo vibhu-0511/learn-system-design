@@ -1,0 +1,27 @@
+{
+  "id": "b12",
+  "title": "Monitoring and Logging",
+  "subtitle": "Measure what users feel, spend an error budget on it, and page only when the budget burns fast",
+  "motto": "You cannot fix what you cannot see, and you cannot see everything, so alert on what users feel",
+  "coreAddition": "metrics, logs, traces and SLO alerts",
+  "keyInsight": "Monitoring turns a 4-hour night into a 15-minute one, but alerts on the wrong signal, like CPU, add noise and still miss real incidents.",
+  "concerns": ["availability", "cost"],
+  "uses": ["f04", "b08"],
+  "sourceNotes": ["02_building_blocks/monitoring_and_logging.md"],
+  "outageRefs": ["datadog_2023"],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["logging-pipeline"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Run the same incident through four setups",
+      "description": "The frames replay one incident with no monitoring, with alerts, with CPU alerts and with burn-rate alerts, so downtime and pages are comparable.",
+      "alternatives": "Describing the three pillars alone would not show what each choice costs in minutes and pages."
+    },
+    {
+      "title": "Show CPU alerts as the failure",
+      "description": "CPU is the alert most teams start with, and the failure frame shows both its noise and the incidents it misses.",
+      "alternatives": "Going straight to burn-rate alerts would skip why the common first choice is weak."
+    }
+  ]
+}

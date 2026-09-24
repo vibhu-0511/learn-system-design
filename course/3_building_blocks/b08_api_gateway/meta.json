@@ -1,0 +1,27 @@
+{
+  "id": "b08",
+  "title": "API Gateway",
+  "subtitle": "One front door turns eight phone calls into one, and becomes a single point of failure",
+  "motto": "Put the cross-cutting work at one door, and then keep the door open",
+  "coreAddition": "gateway with request composition",
+  "keyInsight": "A gateway cuts round trips, repeated auth and client coupling, but every request now depends on it, so it must be replicated.",
+  "concerns": ["latency", "availability"],
+  "uses": ["b01", "f03"],
+  "sourceNotes": ["02_building_blocks/api_gateway.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["premature-microservices"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Compose inside the data centre",
+      "description": "The gateway fans out where a round trip costs 2 ms, so the slow phone link is paid once instead of once per service.",
+      "alternatives": "Letting the phone call each service keeps the gateway thin, but pays the phone round trip and an auth check eight times."
+    },
+    {
+      "title": "Count the gateway in availability",
+      "description": "The failure frame adds the gateway's own downtime and blast radius, because a component every request passes through can take everything down.",
+      "alternatives": "Showing only the latency win would hide that the door is now the one thing that must never fail."
+    }
+  ]
+}

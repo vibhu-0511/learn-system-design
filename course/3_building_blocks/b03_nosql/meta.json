@@ -1,0 +1,27 @@
+{
+  "id": "b03",
+  "title": "NoSQL Databases",
+  "subtitle": "Partition by key to scale writes, and watch for the key everyone wants",
+  "motto": "A good partition key spreads load; a hot one concentrates it",
+  "coreAddition": "partition key",
+  "keyInsight": "Partitioning by key scales writes only as far as the keys are used evenly, and one hot key puts all its load on a single node.",
+  "concerns": ["scalability", "availability"],
+  "uses": ["f06", "b02"],
+  "sourceNotes": ["02_building_blocks/databases_nosql.md"],
+  "outageRefs": ["discord_db_2024"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Fail on a hot key, not a node crash",
+      "description": "The failure is skewed key usage, since that is what actually breaks partitioned stores and it survives adding nodes.",
+      "alternatives": "A node failure is a replication problem, covered elsewhere, and would not teach the partition-key lesson."
+    },
+    {
+      "title": "Show salting's read cost",
+      "description": "The trade-off frame reports how many queries one read now needs, so the fix is shown with its price.",
+      "alternatives": "Showing only the lower node utilization would make salting look free."
+    }
+  ]
+}

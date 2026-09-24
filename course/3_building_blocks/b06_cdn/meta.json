@@ -1,0 +1,27 @@
+{
+  "id": "b06",
+  "title": "CDN",
+  "subtitle": "Serve content from near the user, and decide how long a copy may be wrong",
+  "motto": "Move the copy to the user instead of the user to the copy",
+  "coreAddition": "edge cache",
+  "keyInsight": "A CDN removes round trips and origin load in proportion to its hit rate, and a longer TTL raises the hit rate at the cost of stale copies.",
+  "concerns": ["latency", "cost"],
+  "uses": ["b04", "f02"],
+  "sourceNotes": ["02_building_blocks/cdn.md"],
+  "outageRefs": ["fastly_2021"],
+  "bugScenarioIds": ["photo-gallery-overload"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Reuse the hit-rate model from caching",
+      "description": "Hit rate comes from how often an object is requested and its TTL, the same relationship as b04, so TTL is a real dial with a cost and a benefit.",
+      "alternatives": "A fixed hit-rate slider would hide why TTL and versioned URLs matter."
+    },
+    {
+      "title": "Keep the note's prices",
+      "description": "Origin and CDN per-request prices come from the vault's worked example, so the $3,000 baseline matches the source.",
+      "alternatives": "Invented prices would be simpler but would not let learners check the sim against the note."
+    }
+  ]
+}

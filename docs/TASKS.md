@@ -36,7 +36,7 @@ It contains no code on purpose. Each task names the files, contracts and checks 
 | P3 Port gym + Library | done. See §0.6 for what changed and what is still unverified. | see git log |
 | P4-F Fundamentals (8) | done (f01–f08). f04 came from the pilot. | see git log |
 | P4-E Evolutions (4) | done (e01–e04) | see git log |
-| P4-B Building blocks (12) | todo | |
+| P4-B Building blocks (12) | done (b01–b12) | see git log |
 | P4-P Patterns (19) | todo | |
 | P4-T Trade-offs (7) | todo | |
 | P4-M Method (6) | todo | |

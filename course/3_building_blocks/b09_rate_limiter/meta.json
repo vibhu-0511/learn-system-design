@@ -1,0 +1,27 @@
+{
+  "id": "b09",
+  "title": "Rate Limiter",
+  "subtitle": "A simple counter lets double the limit through at the window edge, and a token bucket does not",
+  "motto": "Say no early, say it fairly, and say it in one place",
+  "coreAddition": "token bucket limiter returning 429",
+  "keyInsight": "How you count matters: a fixed window can pass twice the limit across its boundary, while a token bucket allows a bounded burst and holds the average.",
+  "concerns": ["availability", "cost"],
+  "uses": ["b08", "b04"],
+  "sourceNotes": ["02_building_blocks/rate_limiter.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["notification-firehose"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Show the boundary burst on purpose",
+      "description": "The failure frame sends the same bursts at 0.9 s and 1.0 s, straddling a window edge, because that is the exact case the simple counter gets wrong.",
+      "alternatives": "Testing only well-timed traffic would make the fixed window look correct."
+    },
+    {
+      "title": "Measure the worst 100 ms, not the average",
+      "description": "The metric is the biggest burst let through, since the backend fails on bursts, not on per-second averages.",
+      "alternatives": "Counting requests per second would show 20 for both algorithms and hide the difference."
+    }
+  ]
+}

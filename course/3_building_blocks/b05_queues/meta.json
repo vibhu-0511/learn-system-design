@@ -1,0 +1,27 @@
+{
+  "id": "b05",
+  "title": "Message Queues",
+  "subtitle": "A queue turns 'do it now' into 'do it soon', and asks you to handle 'twice'",
+  "motto": "Answer fast, work later, and expect duplicates",
+  "coreAddition": "queue and workers",
+  "keyInsight": "A queue keeps the request fast and absorbs bursts, but it only defers overload and, with at-least-once delivery, requires consumers that can safely see a message twice.",
+  "concerns": ["latency", "scalability"],
+  "uses": ["e01", "f04"],
+  "sourceNotes": ["02_building_blocks/message_queues.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["notification-firehose"],
+  "drillCaseIds": ["notification-service"],
+  "terms": ["Back Pressure"],
+  "decisions": [
+    {
+      "title": "Show that the queue only hides a spike",
+      "description": "The failure frame reports backlog and wait time, because the user-facing response stays fast while the work quietly falls behind.",
+      "alternatives": "Reporting only response time would make a queue look like it solves overload."
+    },
+    {
+      "title": "Frame delivery as duplicates versus loss",
+      "description": "The trade-off frame gives the same number of affected jobs either way, duplicated under at-least-once and lost under at-most-once, so the choice is clear.",
+      "alternatives": "Explaining the three guarantees abstractly would not show why at-least-once with idempotent consumers is the default."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "b11",
+  "title": "Service Discovery",
+  "subtitle": "A registry replaces hard-coded addresses, and you must choose whether it prefers stale answers or none",
+  "motto": "Ask who is alive, do not remember where they used to be",
+  "coreAddition": "service registry with heartbeats",
+  "keyInsight": "A registry shrinks the time callers use a dead instance from a human's response time to a few missed heartbeats, but its own failure mode, AP or CP, decides what breaks when it does.",
+  "concerns": ["availability", "consistency"],
+  "uses": ["b01", "f06"],
+  "sourceNotes": ["02_building_blocks/service_discovery.md"],
+  "outageRefs": ["roblox_2021"],
+  "bugScenarioIds": ["premature-microservices"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Compare a CP and an AP registry under the same outage",
+      "description": "Frames three and four run one registry outage two ways, so the difference is the consistency choice and nothing else.",
+      "alternatives": "Describing AP and CP in words alone would not show that stale entries cost far fewer requests than a blind registry."
+    },
+    {
+      "title": "Use heartbeat time as the detection cost",
+      "description": "The detection window is the heartbeat interval times the missed beats, so the slider trades registry traffic against how long dead instances stay listed.",
+      "alternatives": "A fixed detection time would hide the trade between chatty heartbeats and stale entries."
+    }
+  ]
+}

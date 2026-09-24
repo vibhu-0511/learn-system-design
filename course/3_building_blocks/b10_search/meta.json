@@ -1,0 +1,27 @@
+{
+  "id": "b10",
+  "title": "Search",
+  "subtitle": "An inverted index turns an 8-second scan into a few milliseconds, at the cost of a second copy of the data",
+  "motto": "Index the words, not the rows",
+  "coreAddition": "inverted index with BM25 ranking",
+  "keyInsight": "Search looks up words instead of scanning rows, and ranks by rarity, but the index is a second copy of your data that trails the database.",
+  "concerns": ["latency", "scalability"],
+  "uses": ["b02", "b03"],
+  "sourceNotes": ["02_building_blocks/search_systems.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["search-via-sql"],
+  "drillCaseIds": ["search-autocomplete"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Show the stop word as the failure",
+      "description": "A word found in 99% of documents makes its posting list as long as the table, so the failure frame shows an index can be nearly as slow as a scan for the wrong word.",
+      "alternatives": "Showing only rare-word queries would make the index look fast for every query."
+    },
+    {
+      "title": "Report the lag with the speed",
+      "description": "The last frame carries the refresh interval next to the storage cost, since a fast index is only useful if you accept that it is behind the database.",
+      "alternatives": "Leaving out staleness would present the index as free."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "b02",
+  "title": "SQL Databases",
+  "subtitle": "An index turns a scan into a handful of page reads, and you pay for it on every write",
+  "motto": "Index for the questions you ask, and only those",
+  "coreAddition": "B-tree index",
+  "keyInsight": "A B-tree index makes a lookup cost a few page reads regardless of table size, but every extra index slows every write and takes space.",
+  "concerns": ["latency", "consistency"],
+  "uses": ["f07", "e02"],
+  "sourceNotes": ["02_building_blocks/databases_sql.md"],
+  "outageRefs": ["slack_db_2024"],
+  "bugScenarioIds": ["search-via-sql"],
+  "drillCaseIds": ["url-shortener"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Show the query that cannot use the index",
+      "description": "The failure frame is an unindexable query, because the common mistake is not a missing index but a query written so the index cannot help.",
+      "alternatives": "Showing only 'no index versus index' would leave learners thinking any index fixes any query."
+    },
+    {
+      "title": "Price writes, not just reads",
+      "description": "The trade-off frame reports write time and storage for indexing everything, since over-indexing is the opposite failure to under-indexing.",
+      "alternatives": "Reporting only query speed would make more indexes look strictly better."
+    }
+  ]
+}

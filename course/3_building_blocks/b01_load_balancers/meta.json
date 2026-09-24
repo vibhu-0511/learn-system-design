@@ -1,0 +1,27 @@
+{
+  "id": "b01",
+  "title": "Load Balancers",
+  "subtitle": "A load balancer is only as good as its idea of which servers are alive",
+  "motto": "Spread the traffic, and stop sending it to the dead",
+  "coreAddition": "load balancer with health checks",
+  "keyInsight": "Spreading traffic is easy; the value of a balancer is how fast it stops sending traffic to a server that has died.",
+  "concerns": ["availability", "scalability"],
+  "uses": ["f01", "f05", "e01"],
+  "sourceNotes": ["02_building_blocks/load_balancers.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Count requests lost, not just utilization",
+      "description": "The failure frames report failed requests during the incident, since a dead server behind round robin looks fine on a utilization chart.",
+      "alternatives": "Reporting only utilization would show 60% on every alive server and hide the 90,000 failed requests."
+    },
+    {
+      "title": "Make detection time the trade-off",
+      "description": "Health checks are shown as a check interval times a failure count, so learners see that faster detection loses fewer requests but risks removing a healthy server.",
+      "alternatives": "Modeling perfect instant detection would make health checks look free."
+    }
+  ]
+}
