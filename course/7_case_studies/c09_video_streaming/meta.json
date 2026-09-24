@@ -1,0 +1,27 @@
+{
+  "id": "c09",
+  "title": "Video Streaming",
+  "subtitle": "Cut it into chunks, cache the chunks, and protect the origin",
+  "motto": "Nobody streams from your servers; they stream from the nearest copy",
+  "coreAddition": "transcoding, chunked adaptive bitrate and a CDN with a shield tier",
+  "keyInsight": "A CDN hit rate is a percentage but the origin lives on absolute load, so a 10x audience needs another tier, not just a good hit rate.",
+  "concerns": ["scalability", "latency", "cost"],
+  "uses": ["b06", "b07", "t06"],
+  "sourceNotes": ["05_case_studies/design_video_streaming.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["photo-gallery-overload"],
+  "drillCaseIds": ["video-streaming"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Fail at 10x with the hit rate unchanged",
+      "description": "The failure frame keeps the CDN hit rate constant and multiplies traffic, to show that the origin sees the miss volume and not the miss percentage.",
+      "alternatives": "Dropping the hit rate would blame the cache for a problem that the traffic growth alone causes."
+    },
+    {
+      "title": "Fix it with a shield tier, and price the second tier",
+      "description": "The trade-off frame adds a regional cache in front of the origin and reports the extra tier next to the lower origin load.",
+      "alternatives": "Adding origin capacity would work at 10x but leaves the next multiple unsolved, and storing fewer qualities would give up adaptive bitrate."
+    }
+  ]
+}

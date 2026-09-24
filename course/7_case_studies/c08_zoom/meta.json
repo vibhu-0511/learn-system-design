@@ -1,0 +1,27 @@
+{
+  "id": "c08",
+  "title": "Zoom",
+  "subtitle": "Forward video instead of meshing or mixing it, and show each person only the tiles they can use",
+  "motto": "Send each stream once, and let the server decide who needs it",
+  "coreAddition": "selective forwarding unit with simulcast",
+  "keyInsight": "An SFU turns each person's upload into one stream, but forwarding N-1 streams to N people makes server bandwidth grow with the square of meeting size, so the real fix is to send fewer streams.",
+  "concerns": ["latency", "scalability", "cost"],
+  "uses": ["b01", "f02", "t02", "t06"],
+  "sourceNotes": ["05_case_studies/design_zoom.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Forward with an SFU instead of meshing or mixing",
+      "description": "Each person uploads one stream and the server forwards copies, so client upload stays at 5 Mbit/s and latency stays near 100 ms.",
+      "alternatives": "A peer-to-peer mesh needs 45 Mbit/s of upload in a 10-person call, and an MCU mixes on the server at about 200 ms and a heavy CPU cost."
+    },
+    {
+      "title": "Show a limited gallery",
+      "description": "Sending each client at most 9 tiles keeps download at 13.5 Mbit/s and holds the fleet at 67,581 servers even for a 100-person meeting.",
+      "alternatives": "Forwarding every stream to every person costs 8.3x the fleet at 100 people and does not fit a home connection."
+    }
+  ]
+}

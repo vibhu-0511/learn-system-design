@@ -1,0 +1,30 @@
+{
+  "id": "m03",
+  "title": "Estimation and Capacity",
+  "subtitle": "From users to QPS to servers: get the order of magnitude, then add peak and headroom",
+  "motto": "Size for the peak, not the average, and be right to within 2x",
+  "coreAddition": "estimation chain with peak factor and napkin grading",
+  "keyInsight": "A fleet sized for average traffic runs at nearly three times capacity at peak, and a guess within 2x picks the same architecture as an exact answer, so estimate the order of magnitude and size for the peak.",
+  "concerns": ["scalability", "cost"],
+  "uses": ["f04", "f05", "m02"],
+  "sourceNotes": [
+    "07_interview_framework/estimation_cheat_sheet.md",
+    "10_hld/capacity_planning.md"
+  ],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["url-shortener"],
+  "terms": ["Throughput"],
+  "decisions": [
+    {
+      "title": "Show sizing for the average as the failure",
+      "description": "The failure frame sizes the fleet for average traffic and reports the load at peak, so the peak factor is justified by a number rather than a rule.",
+      "alternatives": "Stating 'always multiply by 3' would give the rule without showing what skipping it costs."
+    },
+    {
+      "title": "Grade the guess like the napkin quiz",
+      "description": "The last frame applies the app's 2x and 10x grading to a guess expressed as a multiple of the truth, so a sloppy estimate is scored the same way as in practice.",
+      "alternatives": "Reporting only the exact answer would hide that the order of magnitude is what matters."
+    }
+  ]
+}

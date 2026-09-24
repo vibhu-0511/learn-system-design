@@ -1,0 +1,32 @@
+{
+  "id": "c03",
+  "title": "Notification System",
+  "subtitle": "A queue absorbs the load, and priority lanes stop a campaign from burying the one-time codes",
+  "motto": "Deliver the important message first, and the rest when there is room",
+  "coreAddition": "priority queues with reserved workers",
+  "keyInsight": "A queue only smooths spikes if the workers are sized for the peak, and even then one shared queue lets a 50-million-message campaign delay a login code by eight minutes until separate priority lanes reserve capacity for urgent traffic.",
+  "concerns": ["latency", "availability"],
+  "uses": ["b05", "b09", "p10", "p11", "p12", "p14"],
+  "sourceNotes": ["05_case_studies/design_notification_system.md", "10_hld/examples/hld_notification_platform.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["notification-firehose"],
+  "drillCaseIds": ["notification-service"],
+  "terms": ["Idempotency", "Circuit Breaker", "Back Pressure", "Throughput"],
+  "decisions": [
+    {
+      "title": "Start with workers sized for the average",
+      "description": "The first frame sizes the fleet for the average rate to show a queue cannot hide a sustained peak: the backlog grows and one-time codes wait 24 minutes.",
+      "alternatives": "Starting with the peak-sized fleet would make the queue look like the whole answer."
+    },
+    {
+      "title": "Fail on a campaign, not on a server",
+      "description": "The failure frame is a marketing burst in a shared queue, because the damage is a broken latency promise for urgent messages and no server is down.",
+      "alternatives": "A provider outage is the other failure; the vault handles it with retries, a dead letter queue and failover, so it is described and not simulated."
+    },
+    {
+      "title": "Reserve workers for high priority",
+      "description": "The trade-off frame reports both the code delay that stays at about a second and the idle reserved capacity and slower campaign that pay for it.",
+      "alternatives": "Reporting only the fast codes would make the reservation look free."
+    }
+  ]
+}

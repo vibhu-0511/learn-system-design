@@ -1,0 +1,27 @@
+{
+  "id": "m01",
+  "title": "HLD Thinking",
+  "subtitle": "Constraints first: a component earns its place by answering a force",
+  "motto": "Don't start with components. Start with forces.",
+  "coreAddition": "constraints-first design loop",
+  "keyInsight": "Drawing the usual four boxes leaves real needs unanswered and boxes unexplained, and drawing everything adds boxes nothing asked for, so each component must trace back to a constraint.",
+  "concerns": ["scalability", "cost"],
+  "uses": ["f04", "f05"],
+  "sourceNotes": ["10_hld/hld_thinking_system.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["premature-microservices"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Compare two opposite mistakes",
+      "description": "The failure frame draws a habit-driven template and the trade-off frame draws every component, so both under-building and over-building are measured against the justified set.",
+      "alternatives": "Showing only the missing components would suggest more boxes are always safer."
+    },
+    {
+      "title": "Explicit rules instead of a lookup of 'best practice'",
+      "description": "Each component is a one-line predicate on the constraints, so changing one slider visibly changes which boxes are justified.",
+      "alternatives": "A fixed reference architecture would hide the link between force and component."
+    }
+  ]
+}

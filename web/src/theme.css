@@ -296,3 +296,43 @@ a {
   overflow-x: auto;
   font: 12px/1.5 var(--font-mono);
 }
+
+/* ---- topbar search ---- */
+
+.search {
+  position: relative;
+  flex: 1 1 160px;
+  max-width: 280px;
+}
+
+.search-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 10;
+  display: grid;
+  gap: 2px;
+  width: max(100%, 300px);
+  max-width: calc(100vw - 32px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--sky);
+  background-image: linear-gradient(var(--glass), var(--glass));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.search-pop a {
+  display: flex;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.search-pop [aria-selected="true"] a,
+.search-pop a:hover {
+  background: var(--btn);
+  color: var(--btn-text);
+}

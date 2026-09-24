@@ -1,0 +1,27 @@
+{
+  "id": "c10",
+  "title": "Ride Sharing",
+  "subtitle": "Find the nearest driver among millions of moving dots",
+  "motto": "The matching is easy; keeping two million positions fresh is the hard part",
+  "coreAddition": "geohash-sharded location store with hot-region splitting",
+  "keyInsight": "Ride matching is a write problem: 666,667 location updates a second dwarf 116 match requests, and drivers cluster, so the load lands on a few shards.",
+  "concerns": ["scalability", "latency", "consistency"],
+  "uses": ["b03", "p03", "t05"],
+  "sourceNotes": ["05_case_studies/design_ride_sharing.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["food-delivery"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Let the v1 design assume even load",
+      "description": "The component frame shards by geohash and computes an even per-shard load, so the failure frame can show the skew that the assumption hid.",
+      "alternatives": "Starting with a skewed load would explain the hot-spot problem before the reader has seen the design that suffers from it."
+    },
+    {
+      "title": "Price freshness against cost",
+      "description": "The trade-off frame reports how far a driver moves between updates next to the shard count, since fewer updates cut cost but age the positions.",
+      "alternatives": "Adding shards alone would hold the 3 second update rate at the cost of a much larger store."
+    }
+  ]
+}

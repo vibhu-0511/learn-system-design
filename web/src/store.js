@@ -81,3 +81,6 @@ export function useProgress() {
   }, []);
   return readProgress();
 }
+
+// A chapter counts as seen once it is marked done or has been opened.
+export const seenIds = (p) => new Set([...p.done, ...Object.keys(p.visitedAt)]);

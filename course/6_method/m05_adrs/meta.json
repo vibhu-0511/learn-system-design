@@ -1,0 +1,27 @@
+{
+  "id": "m05",
+  "title": "Architecture Decision Records",
+  "subtitle": "A decision without its options and reasons cannot be defended or revisited",
+  "motto": "Record the why, not just the what",
+  "coreAddition": "decision record with options, constraints and revisit trigger",
+  "keyInsight": "A record with one option and no revisit trigger passes fewer than half the checks and cannot show what was rejected or when it stops being right, so list options, tie the choice to constraints and say when to revisit.",
+  "concerns": ["cost", "scalability"],
+  "uses": ["m01"],
+  "sourceNotes": ["10_hld/architecture_decision_records.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Score against the template with explicit thresholds",
+      "description": "Each check is a small predicate over counts (options, constraints, consequences), so the reader can see which missing element costs which check.",
+      "alternatives": "A single 'quality' score would not show what to add."
+    },
+    {
+      "title": "Include the 15-second verbal ADR",
+      "description": "The last frame scores the interview version separately, because the vault presents it as the same thinking without the formal parts.",
+      "alternatives": "Treating only the written record as valid would ignore how decisions are actually voiced in an interview."
+    }
+  ]
+}

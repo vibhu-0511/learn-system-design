@@ -4,6 +4,8 @@ import { useTheme } from "./store.js";
 import { TopBar } from "./ui/TopBar.jsx";
 import { ErrorBoundary } from "./ui/ErrorBoundary.jsx";
 import HomePage from "./course/HomePage.jsx";
+import TracksPage from "./course/TracksPage.jsx";
+import TimelinePage from "./course/TimelinePage.jsx";
 
 // Heavy routes load on demand: the lesson page pulls in the markdown renderer, and the
 // gym and library bring the ported views and the vault reader.
@@ -27,6 +29,8 @@ function ComingSoon({ route }) {
 
 function RouteView({ route, theme }) {
   if (route.name === "home") return <HomePage />;
+  if (route.name === "tracks") return <TracksPage />;
+  if (route.name === "timeline") return <TimelinePage />;
   if (route.name === "lesson") return <LessonPage route={route} theme={theme} />;
   if (route.name === "practice") return <PracticeRoute route={route} theme={theme} />;
   if (route.name === "library") return <LibraryPage route={route} theme={theme} />;

@@ -1,0 +1,27 @@
+{
+  "id": "c11",
+  "title": "Google Maps",
+  "subtitle": "Pre-draw the map, pre-compute the shortcuts",
+  "motto": "A map request should be a file fetch, and a route request should be a table lookup",
+  "coreAddition": "pre-rendered tiles behind a CDN and contraction-hierarchy routing",
+  "keyInsight": "A cache protects the origin only while its contents stay valid, and vector tiles keep the cache valid through a restyle by moving the drawing to the phone.",
+  "concerns": ["latency", "scalability", "cost"],
+  "uses": ["b04", "b06", "b07", "t06"],
+  "sourceNotes": ["05_case_studies/design_google_maps.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["google-maps"],
+  "terms": ["Cache"],
+  "decisions": [
+    {
+      "title": "Break the cache with data, not with a spike",
+      "description": "The failure frame combines 10x traffic with a restyle that invalidates raster tiles, to show that a cache fails when its contents go stale as well as when load grows.",
+      "alternatives": "A plain traffic spike with the hit rate unchanged would repeat the lesson of the video chapter."
+    },
+    {
+      "title": "Price the vector tile against client CPU",
+      "description": "The trade-off frame reports smaller tiles and a stable hit rate next to the drawing time per phone, since the work moves to the device.",
+      "alternatives": "Pre-warming the CDN before a restyle keeps raster tiles and their simple clients but needs an operator step for every change."
+    }
+  ]
+}

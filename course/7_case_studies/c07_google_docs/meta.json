@@ -1,0 +1,27 @@
+{
+  "id": "c07",
+  "title": "Google Docs",
+  "subtitle": "Order every document's edits in one place, batch the writes, and cap how many people can type at once",
+  "motto": "Everyone writes at once, so someone must decide the order",
+  "coreAddition": "per-document ordering with batched persistence",
+  "keyInsight": "The fleet scales by adding machines, but one document must be ordered in one place, so a single busy document is the ceiling that servers cannot lift.",
+  "concerns": ["consistency", "latency"],
+  "uses": ["b03", "b08", "f08", "p18", "t02"],
+  "sourceNotes": ["05_case_studies/design_google_docs.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["google-docs"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "One server orders each document",
+      "description": "All edits for a document flow through one collaboration server that transforms and broadcasts them, giving a single total order and no lost edits.",
+      "alternatives": "A fully decentralised CRDT spreads ordering but adds per-character metadata and is harder to bound."
+    },
+    {
+      "title": "Batch the writes, cap the typists",
+      "description": "Batching 100 writes cuts the database from 25,000 to 250 nodes for about 5 ms more latency; capping simultaneous typists keeps one document at 80% load.",
+      "alternatives": "Writing each edit alone is far too costly, and letting everyone type in a huge document overloads its single ordering server."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "m04",
+  "title": "Interaction Patterns",
+  "subtitle": "In a synchronous chain, latency adds and availability multiplies, so keep only the calls you must wait for",
+  "motto": "Wait only for what you cannot continue without",
+  "coreAddition": "sync-versus-async interaction matrix",
+  "keyInsight": "Five healthy services in a row are slower and less available than any one of them, and one slow hop stalls the caller, so keep synchronous only the calls the response depends on and put the rest behind a queue.",
+  "concerns": ["availability", "latency"],
+  "uses": ["f04", "b05", "p12", "p16"],
+  "sourceNotes": ["10_hld/component_interaction_patterns.md"],
+  "outageRefs": ["aws_us_east_2021"],
+  "bugScenarioIds": ["notification-firehose"],
+  "drillCaseIds": ["notification-service"],
+  "terms": ["Circuit Breaker", "Latency"],
+  "decisions": [
+    {
+      "title": "Availability as a product of hops",
+      "description": "End-to-end availability is computed as the per-hop availability raised to the number of hops, so a chain of individually healthy services visibly falls short.",
+      "alternatives": "Quoting only the latency sum would miss that the chain is also less available than any member."
+    },
+    {
+      "title": "Show the cost of the async fix",
+      "description": "The last frame reports the lag of the deferred hops and names idempotent consumers and dead-letter queues, so async is not presented as a free win.",
+      "alternatives": "Showing only the faster response would hide eventual consistency and duplicate delivery."
+    }
+  ]
+}

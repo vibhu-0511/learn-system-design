@@ -1,0 +1,27 @@
+{
+  "id": "c05",
+  "title": "Instagram Stories",
+  "subtitle": "Let everything expire by itself, and do the fan-out work at write time only for ordinary accounts",
+  "motto": "Content that dies in a day should never need a delete job",
+  "coreAddition": "TTL at every layer plus hybrid fan-out",
+  "keyInsight": "Fan-out on write is cheap for the average account and ruinous for a few huge ones, so the design is decided by the tail of the follower distribution, not the mean.",
+  "concerns": ["scalability", "cost"],
+  "uses": ["b03", "b04", "b05", "b06", "b07", "t07"],
+  "sourceNotes": ["05_case_studies/design_instagram_stories.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["photo-gallery-overload"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Expire with TTLs instead of a delete job",
+      "description": "Object storage, metadata and feed entries each expire at 24 hours on their own, so storage stays at one day of content and no job deletes rows.",
+      "alternatives": "An hourly cron delete would leave stories visible an hour late and run thousands of deletes a second."
+    },
+    {
+      "title": "Fan-out on write, with celebrities pulled at read time",
+      "description": "Ordinary uploads are written into follower feeds so a read is one lookup; accounts with a million followers are merged in when the feed opens, at about 50 ms extra.",
+      "alternatives": "Pure fan-out on read needs one query per followed account, and pure fan-out on write makes one celebrity upload a million writes."
+    }
+  ]
+}

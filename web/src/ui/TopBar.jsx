@@ -1,5 +1,6 @@
 import { Moon, Network, Sun } from "lucide-react";
 import { href } from "../router.js";
+import { SearchBox } from "./SearchBox.jsx";
 
 const NAV = [
   { label: "Home", route: { name: "home" }, active: ["home", "lesson"] },
@@ -16,6 +17,7 @@ export function TopBar({ route, theme, onToggleTheme }) {
         <Network size={22} aria-hidden="true" />
         learn system design
       </a>
+      <SearchBox />
       <nav className="nav" aria-label="Main">
         {NAV.map((item) => (
           <a key={item.label} href={href(item.route)} aria-current={item.active.includes(route.name) ? "page" : undefined}>

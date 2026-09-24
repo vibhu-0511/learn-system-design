@@ -1,0 +1,32 @@
+{
+  "id": "c01",
+  "title": "URL Shortener",
+  "subtitle": "Reads outnumber writes ten to one, so a cache carries it until a link goes viral",
+  "motto": "Put the whole loop to work on one small, read-heavy system",
+  "coreAddition": "cache in front of the database, then read replicas",
+  "keyInsight": "Turn the requirements into reads per second first: a cache takes a 1,200-reads-a-second peak down to a database load of 23%, but a 10x viral spike still overloads one node, so replicas and the 301 or 302 choice are decisions to price, not defaults.",
+  "concerns": ["latency", "scalability"],
+  "uses": ["f04", "b01", "b02", "b04", "p02"],
+  "sourceNotes": ["05_case_studies/design_url_shortener.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["url-shortener"],
+  "terms": ["Cache", "Latency", "Throughput"],
+  "decisions": [
+    {
+      "title": "Start with the no-cache load",
+      "description": "The first frame sends every read to one database node to show the requirement alone already exceeds it, so the cache is justified by a number.",
+      "alternatives": "Starting from the finished design would hide why each component is there."
+    },
+    {
+      "title": "Fail at a viral spike, not at steady load",
+      "description": "The failure frame multiplies reads 10x with the cache hit rate unchanged, because a cache that works on average still passes the misses to a database that cannot take them.",
+      "alternatives": "Testing only average traffic would call the v1 design finished."
+    },
+    {
+      "title": "302 redirects with replicas",
+      "description": "Every click reaches the servers so analytics stay complete, and read replicas pay for the extra load.",
+      "alternatives": "A 301 redirect lets browsers cache it and removes load, but the clicks it hides are lost from analytics."
+    }
+  ]
+}

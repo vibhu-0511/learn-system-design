@@ -1,0 +1,30 @@
+{
+  "id": "m06",
+  "title": "The Review Checklist",
+  "subtitle": "Run your design against a checklist before you present it, and treat each finding as a question",
+  "motto": "Find the gaps yourself before the interviewer does",
+  "coreAddition": "rule-based design review with severities",
+  "keyInsight": "A design that looks complete can still fire several findings, and patching a high finding by adding a box can create a new one, so fix by severity and justify each addition rather than silence the rule.",
+  "concerns": ["availability", "scalability"],
+  "uses": ["m01", "m05", "b04", "b09", "b12"],
+  "sourceNotes": [
+    "10_hld/hld_review_checklist.md",
+    "07_interview_framework/common_red_flags.md"
+  ],
+  "outageRefs": ["roblox_2021"],
+  "bugScenarioIds": ["premature-microservices"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Rules as one-line predicates",
+      "description": "Each check is a short function over the design with a severity, so every finding can be traced to the exact condition that fired it.",
+      "alternatives": "A free-form score would not tell the reader what to fix."
+    },
+    {
+      "title": "Re-run after patching the high findings",
+      "description": "The last frame applies the obvious fixes and lints again, showing that adding a cache creates a cache-invalidation finding.",
+      "alternatives": "Stopping at the first findings would imply that fixing each one in isolation is enough."
+    }
+  ]
+}

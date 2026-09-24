@@ -22,6 +22,8 @@ jobs:
 
       - name: Contract and unit tests
         run: npm test
+        env:
+          COURSE_COMPLETE: "1"
 
       # Runs the vault indexer and course extractor first (prebuild hook).
       - name: Build

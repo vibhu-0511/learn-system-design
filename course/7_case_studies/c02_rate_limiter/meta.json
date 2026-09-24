@@ -1,0 +1,32 @@
+{
+  "id": "c02",
+  "title": "Rate Limiter",
+  "subtitle": "A limit shared by many servers lives in a store, and that store becomes the bottleneck",
+  "motto": "A limit is only as strong as the store that counts it",
+  "coreAddition": "sharded Redis counters with atomic checks",
+  "keyInsight": "The limiter sees every request, so its shared store must be sized for all of them: 5 million requests a second means 143 shards, and a store that saturates fails open and stops limiting at all.",
+  "concerns": ["scalability", "availability"],
+  "uses": ["b01", "b04", "b08", "b09", "p03", "p12"],
+  "sourceNotes": ["05_case_studies/design_rate_limiter.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": ["Latency", "Throughput", "Idempotency"],
+  "decisions": [
+    {
+      "title": "Start from one Redis instance",
+      "description": "The first frame divides the required operations by what one instance serves, so the sharded cluster is justified by a load of 10,000%.",
+      "alternatives": "Starting from the sharded design would hide why a shared counter is expensive."
+    },
+    {
+      "title": "Fail open when the store saturates",
+      "description": "The failure frame lets timed-out checks pass uncounted, following the vault's advice for most APIs, and reports the share of traffic that escapes.",
+      "alternatives": "Failing closed protects the backend but turns a limiter overload into an outage for every honest user."
+    },
+    {
+      "title": "Batch tokens per gateway",
+      "description": "Gateways draw several tokens per Redis call, cutting Redis load by the batch size and costing accuracy, reported as the share of a limit that can slip past.",
+      "alternatives": "An exact global counter never over-admits but needs about five times more shards in the sim."
+    }
+  ]
+}

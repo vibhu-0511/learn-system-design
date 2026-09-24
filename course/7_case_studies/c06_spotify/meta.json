@@ -1,0 +1,27 @@
+{
+  "id": "c06",
+  "title": "Spotify",
+  "subtitle": "Cut songs into chunks, serve them from the edge, and trade audio quality for capacity when the crowd arrives",
+  "motto": "The catalog is small and the audience is huge, so move the bytes to the listener",
+  "coreAddition": "chunked audio behind a CDN with adaptive bitrate",
+  "keyInsight": "A CDN moves the bottleneck from the origin to the edge, so a 10x crowd needs either more edges or a lower bitrate, and each choice has a price.",
+  "concerns": ["latency", "cost", "scalability"],
+  "uses": ["b04", "b06", "b07", "t06"],
+  "sourceNotes": ["05_case_studies/design_spotify.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Put a CDN in front of the origin",
+      "description": "Chunks are cached on 150 edges, so the origin serves only the 6% of misses and playback starts from a nearby server.",
+      "alternatives": "Serving everything from the origin needs the full 3.84 Tbit/s at $0.08 per GB and one data center's link."
+    },
+    {
+      "title": "Downshift the bitrate under load",
+      "description": "Under a 10x crowd the player drops to 128 kbps and the edges are warmed, which cuts the edges needed from 480 to 320 at the cost of audio quality.",
+      "alternatives": "Adding edges alone keeps quality but needs about 50% more edges; doing nothing overloads the existing ones."
+    }
+  ]
+}

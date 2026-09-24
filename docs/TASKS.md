@@ -39,9 +39,9 @@ It contains no code on purpose. Each task names the files, contracts and checks 
 | P4-B Building blocks (12) | done (b01–b12) | see git log |
 | P4-P Patterns (19) | done (p01–p19) | see git log |
 | P4-T Trade-offs (7) | done (t01–t07) | see git log |
-| P4-M Method (6) | todo | |
-| P4-C Case studies (11) | todo | |
-| P5 Finish + deploy | todo | |
+| P4-M Method (6) | done (m01–m06) | see git log |
+| P4-C Case studies (11) | done (c01–c11) | see git log |
+| P5 Finish + deploy | P5.1–P5.4 done; P5.5 (old repo) and P5.6 (Pages) waiting on the user | see git log |
 
 ### 0.4 Deviations and discoveries (read before P2)
 

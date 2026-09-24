@@ -1,0 +1,32 @@
+{
+  "id": "c04",
+  "title": "Search Autocomplete",
+  "subtitle": "Pre-compute the answers per prefix, and pay for freshness only where it matters",
+  "motto": "Answer before they finish typing, from an answer you made earlier",
+  "coreAddition": "pre-computed trie behind layered caches",
+  "keyInsight": "A 290,000-requests-a-second suggestion service needs 21 servers if every keystroke reaches the trie and 3 once debounce and caches take the load, but a trending event misses both the cache and the 15-minute-old trie, so freshness and capacity have to be bought separately.",
+  "concerns": ["latency", "cost"],
+  "uses": ["b04", "b05", "b10", "p03"],
+  "sourceNotes": ["05_case_studies/design_search_autocomplete.md", "02_building_blocks/search_systems.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["search-via-sql"],
+  "drillCaseIds": ["search-autocomplete"],
+  "terms": ["Cache", "Latency", "Throughput"],
+  "decisions": [
+    {
+      "title": "Show the raw load first",
+      "description": "The first frame sends every keystroke to the trie so the debounce and cache layers are justified by the server count they remove.",
+      "alternatives": "Starting from the layered design would hide how much work each layer saves."
+    },
+    {
+      "title": "Fail on a trending spike",
+      "description": "The failure frame drops the cache hit rate and leaves the trie stale at once, since a new query breaks both defences together.",
+      "alternatives": "Testing only steady traffic would show the cache working and miss the case people notice."
+    },
+    {
+      "title": "Price freshness and capacity separately",
+      "description": "The trade-off frame reports staleness falling from the batch interval to 2 minutes and the server count needed for the spike, with the total cost against v1.",
+      "alternatives": "Adding servers alone fixes the load but leaves suggestions stale for a whole batch interval."
+    }
+  ]
+}

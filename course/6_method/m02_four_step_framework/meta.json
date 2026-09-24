@@ -1,0 +1,30 @@
+{
+  "id": "m02",
+  "title": "The Four-Step Framework",
+  "subtitle": "Requirements, numbers, design, deep dive: spend the time where the signal is",
+  "motto": "Never jump to a solution, and never run out of time before the deep dive",
+  "coreAddition": "time-boxed four-step plan",
+  "keyInsight": "Over-spending on requirements and estimation does not just delay the design, it takes the deep dive away, so cap the early steps, state assumptions, and protect the time the interviewer cares about.",
+  "concerns": ["latency", "cost"],
+  "uses": ["f04"],
+  "sourceNotes": [
+    "07_interview_framework/the_four_step_framework.md",
+    "07_interview_framework/requirements_gathering.md"
+  ],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["url-shortener"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Deep dive is the remainder, not a fixed block",
+      "description": "The deep dive gets whatever time is left after the other steps and the wrap-up, so any overspend shows up directly as lost deep-dive minutes.",
+      "alternatives": "Giving the deep dive a fixed 10 minutes would hide the cost of slow early steps."
+    },
+    {
+      "title": "Show the capped fix with its cost",
+      "description": "The last frame caps questions and estimation but says the price is committing to assumptions, so the fix is not presented as free.",
+      "alternatives": "Presenting the cap as a pure win would ignore that assumptions can be wrong."
+    }
+  ]
+}
