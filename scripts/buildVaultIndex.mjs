@@ -319,7 +319,7 @@ async function main() {
   }
 
   const output = {
-    vaultRoot: VAULT_ROOT,
+    vaultRoot: relative(PROJECT_ROOT, VAULT_ROOT) || VAULT_ROOT,
     generatedAt: new Date().toISOString(),
     folders: Object.values(folderMap).sort((a, b) =>
       a.folder.localeCompare(b.folder),

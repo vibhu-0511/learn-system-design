@@ -97,7 +97,7 @@ function Lesson({ chapter, tab, theme }) {
         ))}
       </div>
 
-      <div className="glass panel" role="tabpanel">
+      <div className="glass lesson-panel" role="tabpanel">
         {!body || !result ? (
           <p className="muted">{error ? "Nothing to show." : "Loading…"}</p>
         ) : active === "learn" ? (

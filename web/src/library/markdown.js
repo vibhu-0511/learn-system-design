@@ -6,14 +6,16 @@
 // - wikilinks ([[Target]] / [[Target|Label]]) become clickable spans;
 //   the Library resolves them via the title index.
 //
-// The content is our own repo files, never user input, so marked's output is
-// not sanitized. Do not pass untrusted markdown through this.
+// renderMarkdown is for our own repo files (READMEs, vault notes) and does NOT
+// sanitize: marked passes raw HTML, javascript: links and remote images through.
+// Text from anywhere else, such as an AI model's reply, must go through
+// renderMarkdownUntrusted instead.
 //
 // Use:
 //   container.innerHTML = renderMarkdown(rawMd);
 //   await postProcess(container, theme);   // theme: "light" | "dusk"
 
-import { marked } from "marked";
+import { marked, Marked } from "marked";
 
 let mermaidPromise = null;
 let hljsPromise = null;
@@ -68,6 +70,30 @@ export function renderMarkdown(md) {
   configure();
   if (!md) return "";
   return marked.parse(md);
+}
+
+// Markdown from a source we do not control. Raw HTML is shown as text, images are dropped
+// (a remote image URL can leak data), and links keep only http(s), mailto and in-page targets.
+const SAFE_HREF = /^(https?:|mailto:|#)/i;
+let untrustedParser = null;
+
+export function renderMarkdownUntrusted(md) {
+  if (!md) return "";
+  untrustedParser ??= new Marked({
+    gfm: true,
+    breaks: false,
+    renderer: {
+      html: ({ text }) => escapeHtml(text),
+      image: ({ text }) => escapeHtml(text),
+      link({ href, title, tokens }) {
+        const label = this.parser.parseInline(tokens);
+        if (!SAFE_HREF.test(href)) return label;
+        const t = title ? ` title="${escapeHtml(title)}"` : "";
+        return `<a href="${escapeHtml(href)}"${t} target="_blank" rel="noopener noreferrer">${label}</a>`;
+      },
+    },
+  });
+  return untrustedParser.parse(md);
 }
 
 export async function postProcess(container, theme = "light") {

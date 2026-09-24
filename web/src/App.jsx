@@ -5,8 +5,11 @@ import { TopBar } from "./ui/TopBar.jsx";
 import { ErrorBoundary } from "./ui/ErrorBoundary.jsx";
 import HomePage from "./course/HomePage.jsx";
 
-// The lesson page pulls in the markdown renderer, so it loads on demand.
+// Heavy routes load on demand: the lesson page pulls in the markdown renderer, and the
+// gym and library bring the ported views and the vault reader.
 const LessonPage = lazy(() => import("./course/LessonPage.jsx"));
+const PracticeRoute = lazy(() => import("./practice/PracticeRoute.jsx"));
+const LibraryPage = lazy(() => import("./library/LibraryPage.jsx"));
 
 // Placeholder until each route's page lands in a later phase.
 function ComingSoon({ route }) {
@@ -25,6 +28,8 @@ function ComingSoon({ route }) {
 function RouteView({ route, theme }) {
   if (route.name === "home") return <HomePage />;
   if (route.name === "lesson") return <LessonPage route={route} theme={theme} />;
+  if (route.name === "practice") return <PracticeRoute route={route} theme={theme} />;
+  if (route.name === "library") return <LibraryPage route={route} theme={theme} />;
   return <ComingSoon route={route} />;
 }
 
@@ -37,7 +42,7 @@ export default function App() {
       <div className="backdrop" aria-hidden="true" />
       <TopBar route={route} theme={theme} onToggleTheme={toggleTheme} />
       <main className="page">
-        <ErrorBoundary resetKey={`${route.name}/${route.params.id ?? ""}`}>
+        <ErrorBoundary resetKey={`${route.name}/${route.params.id ?? route.params.tool ?? route.params.path ?? ""}`}>
           <Suspense fallback={<p className="glass error-card muted">Loading…</p>}>
             <RouteView route={route} theme={theme} />
           </Suspense>

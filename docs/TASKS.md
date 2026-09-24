@@ -32,8 +32,8 @@ It contains no code on purpose. Each task names the files, contracts and checks 
 | Phase | Status | Commit |
 |---|---|---|
 | P1 Scaffold | done. Exception: the live Pages URL check is deferred because the repo is private. `test.yml` is green on Linux. | `489b308`, `d994af0` |
-| P2 Pilot (f04, b04, p10) ✋ | done, **waiting for the user's review** before any P3/P4 work | see git log |
-| P3 Port gym + Library | todo | |
+| P2 Pilot (f04, b04, p10) ✋ | done. The user later said "continue", which was taken as approval to proceed. | `4173e70` |
+| P3 Port gym + Library | done. See §0.6 for what changed and what is still unverified. | see git log |
 | P4-F Fundamentals (8) | todo | |
 | P4-E Evolutions (4) | todo | |
 | P4-B Building blocks (12) | todo | |
@@ -82,6 +82,27 @@ The pilot is done: f04, b04 and p10 are written, pass the contract tests, and re
 - **Custom heroes** live in `web/src/course/heroes/` and are registered in `heroes/index.js`. A hero receives `{ frame, params }`. Only b04 has one so far; the plan's others (e01, b05, p03, p13) land with their tracks.
 - **A shared `readStored`/`writeStored` pair in `store.js`** wraps localStorage in try/catch. Use it, not raw localStorage.
 - **Bundle:** the initial JS is about 76 KB gzipped. Mermaid and highlight.js are lazy chunks, which the build warns about (over 500 kB); that warning is expected and is P5.4's to review.
+
+### 0.6 P3 outcome (gym and Library ported)
+
+**Layout.** `web/src/practice/{data,lib,views}` hold the old gym unchanged in behavior; `web/src/library/` holds the vault reader (`NoteReader`, `LibraryView`, `SourceNoteLink`, `VaultMap`, `vaultIndex`, `vaultLoader`, `markdown`). `PracticeRoute.jsx` adapts the old callbacks and "active id" props to URLs (`#/practice/<tool>/<item>`); `PracticeHub.jsx` is the tool grid; `LibraryPage.jsx` wraps the Library. The five views that lived inline in the old `App.jsx` (Notes, Vocabulary, Review, Proposal) are now their own files. Two tools were split out of old tabs: `napkin` (was a mode of Drill) and `review-queue` (was a mode of Today). The old "bugfinder" tab is `bugs` in URLs.
+
+**Styling.** `practice/practice.css` is the old 4,400-line stylesheet, scoped once by script under a `.legacy` wrapper so nothing leaks into the course pages, with a token block that maps the old variable names onto the Cloud theme (light and dusk). The old `:root` and `body` rules were dropped. **Treat that file as source now and edit it directly; do not regenerate it.** The gym views render inside `<div className="legacy">`. Two of my own classes collided with old ones and were renamed (`.node` → `.flow-node`, `.panel` → `.lesson-panel`). Old views' `<main>` roots became `<div>`s, since the page already has one `<main>`.
+
+**Data continuity.** All `hld-*` localStorage keys keep their names and shapes. The site is on the same origin as the old app once deployed, so existing workspaces, notes and FSRS state should appear on their own. `hld-active-*` keys are no longer read. New key: `lsd-review-draft` (the Review and Proposal tools share a draft).
+
+**Security fixes made while porting (do not undo).**
+1. The AI review panel rendered the model's reply with `dangerouslySetInnerHTML` through `marked`, which does not sanitize. A hostile reply could run script and read the API key from localStorage. It now uses `renderMarkdownUntrusted` (raw HTML shown as text, images dropped, only http(s)/mailto/# links kept), with a test in `web/src/library/__tests__/markdown.test.js`. **Rule: `renderMarkdown` is for our own repo files only. Anything else, such as model output or user text, must go through `renderMarkdownUntrusted`.**
+2. A custom provider base URL must now be `https://` (or `http://localhost`), so the key is never sent in clear text.
+3. `vaultIndex` no longer embeds the build machine's absolute path (`C:\Users\...`) in the shipped bundle; the indexer writes a project-relative path.
+
+Known risk, not changed: the AI key is stored in plain text in localStorage, and GitHub Pages user sites share one origin across all repos, so any script served from `vibhu-0511.github.io` could read it. The panel already warns not to use it on a shared computer.
+
+**Chapters' practice links.** The extractor now resolves each chapter's practice ids to titles from the gym data (into `course.json` as `practice: [{kind, id, title}]`) and **fails on an unknown id**. `PracticeTab` shows those titles. The contract test's practice-reference checks are active too.
+
+**Verified in the browser:** all 14 tools plus Library render real content with no console errors; deep links from a chapter open the right item (outage, bug scenario, drill case, vocabulary pre-filled with the term); a vault note renders with its diagram and highlighted code; light and dusk both readable on the outage replay and drill wizard; all 17 practice and library routes fit at 375 px.
+
+**Not verified (do these when convenient):** the drill wizard's later steps (Excalidraw sketch panel, AI review network call with a real key), the capacity lab and failure drill with a saved workspace, kata and interview modes, the old-site data carrying over on a real shared origin, and light-mode screenshots of every tool (only outage and drill were looked at).
 
 ---
 

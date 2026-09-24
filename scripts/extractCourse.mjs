@@ -20,6 +20,28 @@ const OUT_DIR = join(ROOT, "web", "src", "data", "generated");
 const BODIES_DIR = join(OUT_DIR, "chapters");
 const ASSETS_DIR = join(ROOT, "web", "public", "course-assets");
 
+// Practice links: meta field -> the tool the site opens. Titles come from the ported gym data.
+const PRACTICE_FIELDS = [
+  ["outageRefs", "outage"],
+  ["bugScenarioIds", "bugs"],
+  ["drillCaseIds", "drill"],
+  ["terms", "vocab"],
+];
+let practiceTitles = null;
+
+async function loadPracticeTitles() {
+  const dir = join(ROOT, "web", "src", "practice", "data");
+  if (!existsSync(dir)) return null;
+  const load = (file) => import(pathToFileURL(join(dir, file)).href);
+  const [o, b, d, t] = await Promise.all([load("outageReplays.js"), load("bugScenarios.js"), load("drillCases.js"), load("terms.js")]);
+  return {
+    outage: new Map(o.OUTAGE_REPLAYS.map((x) => [x.id, x.title])),
+    bugs: new Map(b.BUG_SCENARIOS.map((x) => [x.id, x.title])),
+    drill: new Map(d.DRILL_CASES.map((x) => [x.id, x.title])),
+    vocab: new Map(t.ALL_TERMS.map((x) => [x.term, x.term])),
+  };
+}
+
 const errors = [];
 const fail = (where, message) => errors.push(`[extract] ${where}: ${message}`);
 
@@ -76,6 +98,15 @@ async function readChapter(trackN, trackName, dirName) {
     return;
   }
 
+  const practice = [];
+  for (const [field, kind] of PRACTICE_FIELDS) {
+    for (const ref of meta[field]) {
+      const title = practiceTitles?.[kind].get(ref);
+      if (practiceTitles && title === undefined) fail(where, `meta.json: ${field} has unknown id "${ref}"`);
+      practice.push({ kind, id: ref, title: title ?? ref });
+    }
+  }
+
   const simSource = readText(files.sim);
   let paramKeys;
   let frameCount;
@@ -107,6 +138,7 @@ async function readChapter(trackN, trackName, dirName) {
       paramKeys,
       frameCount,
       images,
+      practice,
     },
     body: { readme: rewriteReadme(readText(files.readme), id), simSource },
   };
@@ -118,6 +150,7 @@ async function main() {
     process.exit(1);
   }
 
+  practiceTitles = await loadPracticeTitles();
   rmSync(ASSETS_DIR, { recursive: true, force: true });
   mkdirSync(ASSETS_DIR, { recursive: true });
 

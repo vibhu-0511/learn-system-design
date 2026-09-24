@@ -99,7 +99,7 @@
 }
 
 .tile small,
-.node small {
+.flow-node small {
   display: block;
   color: var(--muted);
   font-size: 12px;
@@ -154,7 +154,7 @@ td[data-tone="bad"] {
   gap: 8px;
 }
 
-.node {
+.flow-node {
   flex: 1 1 140px;
   min-width: 0;
   padding: 10px 12px;
@@ -163,11 +163,11 @@ td[data-tone="bad"] {
   background: var(--glass);
 }
 
-.node[data-dashed="true"] {
+.flow-node[data-dashed="true"] {
   border-style: dashed;
 }
 
-.node b {
+.flow-node b {
   display: block;
   color: var(--ink);
   font-size: 15px;
@@ -200,13 +200,13 @@ td[data-tone="bad"] {
   background: var(--ok);
 }
 
-.node[data-tone="hot"] .bar div {
+.flow-node[data-tone="hot"] .bar div {
   background: var(--hot);
 }
-.node[data-tone="bad"] .bar div {
+.flow-node[data-tone="bad"] .bar div {
   background: var(--bad);
 }
-.node[data-tone="bad"] b {
+.flow-node[data-tone="bad"] b {
   color: var(--bad);
 }
 
@@ -224,7 +224,7 @@ td[data-tone="bad"] {
   background: var(--glass);
 }
 
-.panel {
+.lesson-panel {
   padding: 18px 20px;
   min-width: 0;
 }
