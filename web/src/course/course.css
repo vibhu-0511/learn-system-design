@@ -478,3 +478,66 @@ td[data-tone="bad"] {
     grid-row: 2;
   }
 }
+
+/* ---- custom heroes (b05, p03, p13) ---- */
+
+.tank-body,
+.shard-bar,
+.pool-bar {
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.tank-body {
+  height: 64px;
+  margin: 6px 0;
+}
+.tank-body div,
+.shard-bar div,
+.pool-bar div {
+  width: 100%;
+  background: var(--ok);
+}
+.tank-body div {
+  background: var(--bad);
+}
+[data-tone="hot"] > .shard-bar div,
+[data-tone="hot"] > .pool-bar div {
+  background: var(--hot);
+}
+[data-tone="bad"] > .shard-bar div,
+[data-tone="bad"] > .pool-bar div {
+  background: var(--bad);
+}
+.shards,
+.pools {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+.shard,
+.pool {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+}
+.pool[data-wide="true"] {
+  flex-basis: 100%;
+}
+.shard b {
+  display: block;
+  font-size: 12px;
+}
+.shard small,
+.pool small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.shard-bar {
+  height: 110px;
+}
+.pool-bar {
+  height: 70px;
+}

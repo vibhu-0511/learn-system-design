@@ -45,6 +45,13 @@ function outcome(shares, place, { totalRps, shardCapacityRps, shards }) {
   };
 }
 
+// Per-shard load (% of one shard's capacity) for a frame's beat, for the custom hero.
+export function shardLoads(beat, { totalRps, shardCapacityRps, shards, skew }) {
+  const n = beat === "constraints" ? 1 : shards;
+  const place = beat === "constraints" ? () => 0 : beat === "tradeoff" ? rangeShard : hashShard;
+  return shardShares(place, n, beat === "component" ? 0 : skew).map((s) => Math.round(((s * totalRps) / shardCapacityRps) * 100));
+}
+
 export function run({ totalRps, shardCapacityRps, shards, skew }) {
   const cfg = { totalRps, shardCapacityRps, shards };
   const one = outcome([1], () => 0, { ...cfg, shards: 1 });

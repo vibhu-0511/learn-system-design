@@ -24,8 +24,8 @@
   --blush: #3a2838;
   --cloud: rgba(255, 255, 255, 0.07);
   --ink: #f4f5f7;
-  --ink-2: #dde1e6;
-  --muted: #aeb5c0;
+  --ink-2: #eceff2;
+  --muted: #c2c9d3;
   --glass: rgba(255, 255, 255, 0.09);
   --line: rgba(255, 255, 255, 0.16);
   --btn: #f4f5f7;
@@ -335,4 +335,13 @@ a {
 .search-pop a:hover {
   background: var(--btn);
   color: var(--btn-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

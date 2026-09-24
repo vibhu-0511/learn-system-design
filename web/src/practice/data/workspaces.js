@@ -330,14 +330,18 @@ export function statusOf(workspace) {
 
 const listeners = new Set();
 
+// Deferred a tick: ensureDrillWorkspace and friends run inside useState initializers, and
+// notifying subscribers synchronously there sets state in other components mid-render.
 function notify() {
-  for (const fn of listeners) {
-    try {
-      fn();
-    } catch {
-      /* ignore listener errors */
+  queueMicrotask(() => {
+    for (const fn of listeners) {
+      try {
+        fn();
+      } catch {
+        /* ignore listener errors */
+      }
     }
-  }
+  });
 }
 
 if (typeof window !== "undefined") {

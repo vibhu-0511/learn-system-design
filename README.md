@@ -48,24 +48,24 @@ Every `sim.mjs` runs alone with `node`, and the same file runs live in the brows
 
 ## What happened to the old app
 
-The original 13-tab app stays live. Its features moved here:
+The original 13-tab app stays live. Its tabs (Today, Skills, Drill, Bug Finder, Outage, Failure, Capacity, Library, Vocabulary, Workspaces, Review, Proposal, Notes) moved here:
 
 | Old tab | Now |
 |---|---|
-| Learn / level picker | The chapters, `#/tracks` and `#/timeline` |
+| (Level picker and 14-lesson starter path, not a tab) | The chapters, `#/tracks` and `#/timeline` |
 | Today | `#/practice/today` |
 | Skills | `#/practice/skills` |
-| Drill (including napkin math) | `#/practice/drill`, `#/practice/napkin` |
-| Bug finder | `#/practice/bugs` |
-| Outage replay | `#/practice/outage` |
-| Failure injection | `#/practice/failure` |
-| Capacity lab | `#/practice/capacity` |
+| Drill (including its napkin-math quiz) | `#/practice/drill`, `#/practice/napkin` |
+| Bug Finder | `#/practice/bugs` |
+| Outage | `#/practice/outage` |
+| Failure | `#/practice/failure` |
+| Capacity | `#/practice/capacity` |
 | Workspaces | `#/practice/workspaces` |
-| Review (and its queue) | `#/practice/review`, `#/practice/review-queue` |
+| Review (the Review Queue was reached from Today) | `#/practice/review`, `#/practice/review-queue` |
 | Proposal | `#/practice/proposal` |
 | Notes | `#/practice/notes` |
 | Vocabulary | `#/practice/vocab` |
-| Vault / Library | `#/library` |
+| Library | `#/library` |
 
 ## Layout
 

@@ -509,7 +509,7 @@ function ConstraintsStep({
       <div className="drill-step-footer">
         <span className={`muted ${allFilled ? "is-ok" : ""}`}>
           {allFilled
-            ? "All constraints stated. Ready for components."
+            ? "All constraints stated. Ready for entities and API."
             : "Fill all eight fields to continue."}
         </span>
         <button
@@ -517,7 +517,7 @@ function ConstraintsStep({
           disabled={!allFilled}
           onClick={onNext}
         >
-          Continue to Components <ArrowRight size={14} />
+          Continue to Entities & API <ArrowRight size={14} />
         </button>
       </div>
     </section>
@@ -581,7 +581,7 @@ function ComponentsStep({
     <section className="panel drill-step">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">Step 2</p>
+          <p className="eyebrow">Step 3</p>
           <h2>Pick components. Defend each one.</h2>
         </div>
       </div>
@@ -712,13 +712,13 @@ function ComponentsStep({
 
       <div className="drill-step-footer">
         <button className="link-button" onClick={onBack}>
-          <ArrowLeft size={14} /> Back to constraints
+          <ArrowLeft size={14} /> Back to entities & API
         </button>
         <span className={`muted ${allJustified ? "is-ok" : ""}`}>
           {components.length === 0
             ? "Add at least one component."
             : allJustified
-              ? "All components justified. Ready for review."
+              ? "All components justified. Ready for the deep dive."
               : "Each component needs at least a 12-char justification."}
         </span>
         <button
@@ -726,7 +726,7 @@ function ComponentsStep({
           disabled={!allJustified}
           onClick={onNext}
         >
-          Continue to Review <ArrowRight size={14} />
+          Continue to Deep dive <ArrowRight size={14} />
         </button>
       </div>
     </section>
@@ -794,7 +794,7 @@ function ReviewStep({
       <div className="panel">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Step 3 · Review</p>
+            <p className="eyebrow">Step 5 · Review</p>
             <h2>Lint findings ({findings.length})</h2>
           </div>
           {findings.length === 0 && (

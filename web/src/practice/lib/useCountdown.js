@@ -1,18 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
+// Remaining ms is derived at render time so it is right on the very first render after a
+// deadline appears (a state copy would read 0 for one render and end the interview at once).
 export function useCountdown(deadlineMs) {
-  const [remaining, setRemaining] = useState(() =>
-    deadlineMs ? Math.max(0, deadlineMs - Date.now()) : 0,
-  );
-  const ref = useRef(null);
+  const [, tick] = useState(0);
   useEffect(() => {
     if (!deadlineMs) return undefined;
-    const tick = () => setRemaining(Math.max(0, deadlineMs - Date.now()));
-    tick();
-    ref.current = setInterval(tick, 1000);
-    return () => clearInterval(ref.current);
+    const id = setInterval(() => tick((n) => n + 1), 1000);
+    return () => clearInterval(id);
   }, [deadlineMs]);
-  return remaining;
+  return deadlineMs ? Math.max(0, deadlineMs - Date.now()) : 0;
 }
 
 export function formatRemaining(ms) {

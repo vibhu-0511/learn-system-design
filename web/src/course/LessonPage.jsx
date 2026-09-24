@@ -57,6 +57,18 @@ function Lesson({ chapter, tab, theme }) {
   const setParam = (key, value) => setParams((p) => ({ ...p, [key]: value }));
   const resetParams = () => setParams(sanitizeParams(null, sim.PARAMS));
 
+  // Arrow keys move between tabs (the tabs are links, so following one changes the route).
+  const onTabKey = (e) => {
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (!step && e.key !== "Home" && e.key !== "End") return;
+    e.preventDefault();
+    const tabs = [...e.currentTarget.children];
+    const i = tabs.indexOf(document.activeElement);
+    const next = tabs[e.key === "Home" ? 0 : e.key === "End" ? tabs.length - 1 : (i + step + tabs.length) % tabs.length];
+    next.focus();
+    next.click();
+  };
+
   return (
     <div className="lesson">
       <header className="glass lesson-head">
@@ -89,15 +101,15 @@ function Lesson({ chapter, tab, theme }) {
         !error && <div className="glass hero-card muted">Loading the simulator…</div>
       )}
 
-      <div className="tabs" role="tablist" aria-label="Lesson sections">
+      <div className="tabs" role="tablist" aria-label="Lesson sections" onKeyDown={onTabKey}>
         {TABS.map((t) => (
-          <a key={t.id} role="tab" aria-selected={t.id === active} className="tab" href={lessonHref(id, t.id)}>
+          <a key={t.id} id={`tab-${t.id}`} role="tab" aria-selected={t.id === active} aria-controls="lesson-panel" tabIndex={t.id === active ? 0 : -1} className="tab" href={lessonHref(id, t.id)}>
             {t.label}
           </a>
         ))}
       </div>
 
-      <div className="glass lesson-panel" role="tabpanel">
+      <div className="glass lesson-panel" role="tabpanel" id="lesson-panel" aria-labelledby={`tab-${active}`}>
         {!body || !result ? (
           <p className="muted">{error ? "Nothing to show." : "Loading…"}</p>
         ) : active === "learn" ? (

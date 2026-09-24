@@ -41,7 +41,7 @@ It contains no code on purpose. Each task names the files, contracts and checks 
 | P4-T Trade-offs (7) | done (t01–t07) | see git log |
 | P4-M Method (6) | done (m01–m06) | see git log |
 | P4-C Case studies (11) | done (c01–c11) | see git log |
-| P5 Finish + deploy | P5.1–P5.4 done; P5.5 (old repo) and P5.6 (Pages) waiting on the user | see git log |
+| P5 Finish + deploy | done except P5.5 (old-repo PR, see docs/old-repo-banner.md). Repo is public, Pages is live at https://vibhu-0511.github.io/learn-system-design/ | see git log |
 
 ### 0.4 Deviations and discoveries (read before P2)
 
@@ -59,7 +59,7 @@ These differ from what PLAN.md or the tasks below say. Where they conflict, **th
    - The short names in the P4 tables ("Fastly 2021", "Maps", "Autocomplete") map onto these ids. Always use the ids in `meta.json`.
 6. **The old repo has no LICENSE file** (its README says MIT). P1 created an MIT `LICENSE` with holder `vibhu-0511`.
 7. **Vault has 265 notes**, not 255 as the old README says. The indexer reports 265 notes in 19 chunks.
-8. **Repo is private for now** (the user's choice at P1.1). GitHub Pages is unavailable on a free account for private repos, so the "Pages URL is live" checks in P1.8 and P5.6 wait until the repo is made public. `deploy-pages.yml` is kept but its behaviour is noted in P1.8's result.
+8. **Repo is public** (made public at the end of P5; Pages source is GitHub Actions and deploys on every push to main).
 9. **Home page has a working chapter search box** (title, claim, motto, concerns) because a dead input is worse than none. TopBar search over vault notes is still P5.2.
 10. **Preview tooling caveat.** The browser tool's `preview_start` with a config *name* read `personal/.claude/launch.json` (a different project's Forge dev server) instead of this project's. Start the site with `npm run dev` yourself, then open `http://localhost:5173` with `preview_start` using a `url`. Stop any wrong server it started.
 11. **Sims must guard the CLI entry** without importing Node modules: see the placeholder `f04/sim.mjs` for the pattern that works in Node (including Windows paths) and in the browser. A contract test rejects `node:` imports and `require(`.
