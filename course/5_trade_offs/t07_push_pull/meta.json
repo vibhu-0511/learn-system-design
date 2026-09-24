@@ -1,0 +1,27 @@
+{
+  "id": "t07",
+  "title": "Push vs Pull",
+  "subtitle": "Polling wastes requests on empty answers, pushing melts on the celebrity post, and the answer is both",
+  "motto": "Push what is small and personal, and let clients pull what is huge and shared",
+  "coreAddition": "hybrid push for normal events and pull for celebrity content",
+  "keyInsight": "Polling spends 10,000 requests a second to find 100 events, and pushing to 50,000 fans at once overloads the servers, so send normal events by push and let clients fetch content that fans out too widely.",
+  "concerns": ["scalability", "latency"],
+  "uses": ["e03", "p16", "b05"],
+  "sourceNotes": ["06_trade_offs/push_vs_pull.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["notification-firehose"],
+  "drillCaseIds": ["notification-service"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Fail push on the celebrity, not on volume",
+      "description": "Push handles the steady load easily, so the failure frame uses the case that breaks it: one post that must reach 50,000 users together.",
+      "alternatives": "Testing push only on average traffic would make it look strictly better than polling."
+    },
+    {
+      "title": "Report both delays",
+      "description": "The metrics separate the delay of a normal event from the delay of a celebrity post, since the hybrid gives them different answers on purpose.",
+      "alternatives": "A single average delay would blur the difference between the two paths."
+    }
+  ]
+}

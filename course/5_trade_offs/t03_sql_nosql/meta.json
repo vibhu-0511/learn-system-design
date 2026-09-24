@@ -1,0 +1,27 @@
+{
+  "id": "t03",
+  "title": "SQL vs NoSQL",
+  "subtitle": "Choose by access pattern: relationships want joins, and a write surge wants horizontal scale",
+  "motto": "Pick the database for the questions you will ask, not the one you like",
+  "coreAddition": "access-pattern split between SQL and a document store",
+  "keyInsight": "A document store makes writes easy to spread but turns a join into hundreds of queries, while SQL joins well until writes outgrow one primary, so many systems keep each kind of data where it is queried.",
+  "concerns": ["scalability", "consistency"],
+  "uses": ["b02", "b03", "f07"],
+  "sourceNotes": ["06_trade_offs/sql_vs_nosql.md"],
+  "outageRefs": ["discord_db_2024"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Fail each side on its own workload",
+      "description": "The document store fails on the feed's relationships and SQL fails on the write surge, so neither is shown as the default.",
+      "alternatives": "Testing both on one workload would name a winner that flips on the other."
+    },
+    {
+      "title": "End with a split, not a verdict",
+      "description": "The last frame keeps relationships in SQL and moves the write-heavy events out, and names the cost of running two stores.",
+      "alternatives": "Ending on 'it depends' would leave the reader with no design to weigh."
+    }
+  ]
+}

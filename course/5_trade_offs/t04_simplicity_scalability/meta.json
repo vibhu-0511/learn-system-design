@@ -1,0 +1,27 @@
+{
+  "id": "t04",
+  "title": "Simplicity vs Scalability",
+  "subtitle": "Build for the load you can measure, and know the number at which you will split",
+  "motto": "Complexity you build today is paid for with time you do not have",
+  "coreAddition": "split point at 70% of capacity",
+  "keyInsight": "Scaling machinery built before users need it costs months and money now for capacity used much later, so start simple and choose the load at which you will split.",
+  "concerns": ["cost", "scalability"],
+  "uses": ["e04", "b01"],
+  "sourceNotes": ["06_trade_offs/simplicity_vs_scalability.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["premature-microservices"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Price the head start in dollars and months",
+      "description": "The microservices frame reports build cost and launch time against the monolith, so complexity appears as money spent before revenue.",
+      "alternatives": "Describing microservices as 'more complex' would not show what the complexity costs a small team."
+    },
+    {
+      "title": "Output months until the wall",
+      "description": "Every frame shows how long current growth takes to reach 70% of capacity, which turns 'we might need to scale' into a date.",
+      "alternatives": "A fixed rule such as 'use a monolith below 10 engineers' would ignore growth."
+    }
+  ]
+}

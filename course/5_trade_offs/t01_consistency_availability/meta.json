@@ -1,0 +1,27 @@
+{
+  "id": "t01",
+  "title": "Consistency vs Availability",
+  "subtitle": "During a partition, price a wrong answer against no answer, and split the choice by data",
+  "motto": "Ask what a wrong answer costs before you decide a slow one is worse",
+  "coreAddition": "break-even cost of an inconsistency",
+  "keyInsight": "Consistency wins when one wrong answer costs more than the sales you lose by refusing to answer, which at a 2% oversell rate is basket size divided by 0.02.",
+  "concerns": ["consistency", "availability"],
+  "uses": ["f06", "f08", "p02"],
+  "sourceNotes": ["06_trade_offs/consistency_vs_availability.md"],
+  "outageRefs": ["github_db_2018"],
+  "bugScenarioIds": ["checkout-double-charge"],
+  "drillCaseIds": ["ticketmaster"],
+  "terms": ["Consistency"],
+  "decisions": [
+    {
+      "title": "Make the break-even the output",
+      "description": "The calculator reports the cost per oversold order at which the answer flips, so the choice becomes a number to compare with your own business.",
+      "alternatives": "Declaring a winner for e-commerce would hide that the same calculation picks the opposite side for payments."
+    },
+    {
+      "title": "Include the hybrid",
+      "description": "The last frame refuses only orders on nearly sold-out items, since real systems choose per operation, not for the whole site.",
+      "alternatives": "Offering only the two pure options would suggest the choice is all or nothing."
+    }
+  ]
+}

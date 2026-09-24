@@ -38,7 +38,7 @@ It contains no code on purpose. Each task names the files, contracts and checks 
 | P4-E Evolutions (4) | done (e01–e04) | see git log |
 | P4-B Building blocks (12) | done (b01–b12) | see git log |
 | P4-P Patterns (19) | done (p01–p19) | see git log |
-| P4-T Trade-offs (7) | todo | |
+| P4-T Trade-offs (7) | done (t01–t07) | see git log |
 | P4-M Method (6) | todo | |
 | P4-C Case studies (11) | todo | |
 | P5 Finish + deploy | todo | |

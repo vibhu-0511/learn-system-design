@@ -1,0 +1,27 @@
+{
+  "id": "t06",
+  "title": "Cost vs Performance",
+  "subtitle": "Buy the performance your requirement names, and scale the bill with the load",
+  "motto": "Performance is expensive, so buy what you need and not what sounds impressive",
+  "coreAddition": "right-sizing against a latency target",
+  "keyInsight": "Impressive infrastructure for 50 users cost 57 times the right-sized bill for latency nobody could notice, so size to a stated target and add capacity as measured load arrives.",
+  "concerns": ["cost", "latency"],
+  "uses": ["b06", "b07", "f05"],
+  "sourceNotes": ["06_trade_offs/cost_vs_performance.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["photo-gallery-overload"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Reproduce the vault's two bills",
+      "description": "The sim's prices are set so the gold-plated design costs $45,000 and the right-sized one about $800, so the frames match the note's story.",
+      "alternatives": "Invented prices that gave different totals would leave the story unchecked."
+    },
+    {
+      "title": "Tie extra performance to a target",
+      "description": "The last frame says a second region is justified only when the single region misses the latency target, so spending has a trigger.",
+      "alternatives": "A blanket rule such as 'always use several regions' would repeat the gold-plating mistake."
+    }
+  ]
+}

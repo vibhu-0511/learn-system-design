@@ -1,0 +1,27 @@
+{
+  "id": "t05",
+  "title": "Read vs Write Optimization",
+  "subtitle": "Every read shortcut is paid for on each write, so keep the write path lean and rebuild reads from it",
+  "motto": "Speed up reads without taxing every write",
+  "coreAddition": "lean write path with batched read refresh",
+  "keyInsight": "Indexes, cache invalidations and materialized views make reads fast by making every write do more work, so the answer is to keep the write path small and refresh the read side in batches, accepting a bounded delay.",
+  "concerns": ["latency", "cost"],
+  "uses": ["p01", "p17", "b04"],
+  "sourceNotes": ["06_trade_offs/read_vs_write_optimization.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Fail the read optimisation on ingestion growth",
+      "description": "The failure frame grows the write rate against the design that already made reads fast, since the harm shows up months later, not on the day of the change.",
+      "alternatives": "Testing only the dashboard would report the read optimisation as pure gain."
+    },
+    {
+      "title": "Price the fix in staleness",
+      "description": "The last frame shows the capacity gained and the seconds of delay the dashboard now has, so the cost moves to a place the user can accept.",
+      "alternatives": "Calling the decoupled design free would hide that its data is behind."
+    }
+  ]
+}

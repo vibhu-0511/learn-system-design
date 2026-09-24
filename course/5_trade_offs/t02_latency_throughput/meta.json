@@ -1,0 +1,27 @@
+{
+  "id": "t02",
+  "title": "Latency vs Throughput",
+  "subtitle": "Batching buys capacity with waiting, so pick the smallest batch that keeps up",
+  "motto": "Batch until you keep up, and not one item further",
+  "coreAddition": "smallest batch that meets capacity",
+  "keyInsight": "One item at a time gives the lowest latency but cannot keep up once fixed costs dominate, and a batch larger than needed only adds waiting, so the right size is the smallest one with enough capacity.",
+  "concerns": ["latency", "cost"],
+  "uses": ["f04", "p05"],
+  "sourceNotes": ["06_trade_offs/latency_vs_throughput.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["logging-pipeline"],
+  "terms": ["Latency", "Throughput"],
+  "decisions": [
+    {
+      "title": "Output the smallest sufficient batch",
+      "description": "The last frame searches for the smallest batch whose capacity covers the arrivals plus headroom, so the answer is a number to compare against a latency target.",
+      "alternatives": "Reporting only 'small is fast, large is efficient' would leave the reader to guess where between."
+    },
+    {
+      "title": "Show both extremes failing",
+      "description": "One item at a time fails on capacity and a huge batch fails on latency, so neither pure choice is presented as the safe one.",
+      "alternatives": "Showing only the batch that fails the target would make batching look bad."
+    }
+  ]
+}
