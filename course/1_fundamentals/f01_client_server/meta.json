@@ -1,0 +1,27 @@
+{
+  "id": "f01",
+  "title": "Client-Server",
+  "subtitle": "Clients ask, servers answer, and the state has to live somewhere",
+  "motto": "Make servers forgettable, so any one of them can fail",
+  "coreAddition": "stateless servers behind a load balancer",
+  "keyInsight": "Spreading load across servers is easy; deciding where each user's session lives is what decides whether a crash costs you users.",
+  "concerns": ["scalability", "availability"],
+  "uses": [],
+  "sourceNotes": ["01_fundamentals/client_server_architecture.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": ["Client-Server Model"],
+  "decisions": [
+    {
+      "title": "Show sessions, not just load",
+      "description": "The failure frame reports the share of users who lose their session, because a stateful crash is a user-visible event, not only a capacity event.",
+      "alternatives": "Modeling only utilization would show the servers coping and hide the lost logins, which is the real cost of stateful servers."
+    },
+    {
+      "title": "Compare after a crash with one fewer server",
+      "description": "Both the stateful and stateless frames are measured with a server gone, so the capacity headroom (N+1) is part of the lesson.",
+      "alternatives": "Measuring only the healthy fleet makes both designs look equally fine and skips the reason to over-provision."
+    }
+  ]
+}

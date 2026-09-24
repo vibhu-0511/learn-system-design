@@ -34,7 +34,7 @@ It contains no code on purpose. Each task names the files, contracts and checks 
 | P1 Scaffold | done. Exception: the live Pages URL check is deferred because the repo is private. `test.yml` is green on Linux. | `489b308`, `d994af0` |
 | P2 Pilot (f04, b04, p10) ✋ | done. The user later said "continue", which was taken as approval to proceed. | `4173e70` |
 | P3 Port gym + Library | done. See §0.6 for what changed and what is still unverified. | see git log |
-| P4-F Fundamentals (8) | todo | |
+| P4-F Fundamentals (8) | done (f01–f08). f04 came from the pilot. | see git log |
 | P4-E Evolutions (4) | todo | |
 | P4-B Building blocks (12) | todo | |
 | P4-P Patterns (19) | todo | |
@@ -65,6 +65,8 @@ These differ from what PLAN.md or the tasks below say. Where they conflict, **th
 11. **Sims must guard the CLI entry** without importing Node modules: see the placeholder `f04/sim.mjs` for the pattern that works in Node (including Windows paths) and in the browser. A contract test rejects `node:` imports and `require(`.
 12. **Git identity**: inside this folder the identity resolves to `vibhu-0511` with email `vibhanshu.0511@gmail.com` (from `personal/.gitconfig`).
 13. **Lockfile trap.** A lockfile generated on Windows after an earlier install can record Linux-incompatible platform packages (`@parcel/watcher-*`, pulled in through `@excalidraw/excalidraw` → `sass`) as *required*, so `npm ci` fails on the CI runner with `EBADPLATFORM`. If you change dependencies, regenerate with `npm install --package-lock-only`, then check that every lock entry with an `os` or `cpu` field is marked `optional`. Run a clean `npm ci` before pushing.
+15. **Errors found in the vault source notes** (do not copy numbers from the notes without checking them; recompute in the sim). The vault is the user's own material and was left unchanged; the errors are listed here so the user can fix the notes.
+    - `01_fundamentals/scalability.md`, Amdahl's Law table (about lines 797–824): the speedups are wrong. For a workload that is 95% parallel the true values are 1.9x (2 servers), 6.9x (10), 16.8x (100) and 19.6x (1,000), with a ceiling of 20x. The note says 1.94x, 7.4x, 20.2x and 24.4x, and its 24.4x exceeds its own stated 20x maximum. The f05 sim computes the formula, so its numbers are right.
 14. **`deploy-pages.yml` is manual-only** (`workflow_dispatch`) while the repo is private. Restore the push trigger, as its comment says, once the repo is public and Pages is set to "GitHub Actions".
 
 ### 0.5 P2 outcome and chapter recipe refinements (read before P4)

@@ -223,6 +223,11 @@ describe.each(chapters)("chapter $id ($dirName)", (ch) => {
       for (const beat of BEATS) expect(beats, `${ch.id}: no "${beat}" frame`).toContain(beat);
     });
 
+    it("reports the same metric keys in every frame, so the comparison table has no gaps", () => {
+      const keySets = sim.run(defaults).frames.map((f) => Object.keys(f.metrics).sort().join(","));
+      expect(new Set(keySets).size, `${ch.id}: frames report different metrics: ${keySets.join(" | ")}`).toBe(1);
+    });
+
     it("gives every frame a title, a note and finite numeric metrics, at the defaults and at every slider end", () => {
       const cases = [{ label: "defaults", params: defaults }];
       for (const [key, p] of Object.entries(sim.PARAMS)) {

@@ -1,0 +1,27 @@
+{
+  "id": "f06",
+  "title": "CAP Theorem",
+  "subtitle": "When the network splits, you choose between correct and available",
+  "motto": "Partitions are not optional, so choose how you fail",
+  "coreAddition": "CP versus AP during a partition",
+  "keyInsight": "Because partitions will happen, the real choice is whether the small side refuses requests or answers from data that may be stale.",
+  "concerns": ["availability", "consistency"],
+  "uses": ["f01"],
+  "sourceNotes": ["01_fundamentals/cap_theorem.md"],
+  "outageRefs": ["github_db_2018"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": ["Consistency"],
+  "decisions": [
+    {
+      "title": "One split with a small side, not a general model",
+      "description": "The sim splits three replicas into a majority and a minority so the CP and AP outcomes are easy to read as percentages of users.",
+      "alternatives": "A model with arbitrary partitions is more general but hides the simple fact that one side loses a majority."
+    },
+    {
+      "title": "End on a per-feature choice",
+      "description": "The trade-off frame classifies part of the traffic as needing consistency, since real systems rarely pick one letter for everything.",
+      "alternatives": "Stopping at CP versus AP would leave learners believing a whole system must pick a side."
+    }
+  ]
+}

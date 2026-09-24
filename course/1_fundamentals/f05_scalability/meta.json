@@ -1,0 +1,27 @@
+{
+  "id": "f05",
+  "title": "Scalability",
+  "subtitle": "Scaling out buys capacity until the serial work says stop",
+  "motto": "Adding servers is not the same as adding capacity",
+  "coreAddition": "Amdahl's law",
+  "keyInsight": "The work that cannot be split sets a ceiling on scaling out, so the number to watch is the serial fraction, not the server count.",
+  "concerns": ["scalability", "cost"],
+  "uses": ["f01", "f04"],
+  "sourceNotes": ["01_fundamentals/scalability.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Model the serial fraction, not just server count",
+      "description": "Capacity grows by the Amdahl speedup, so the sim shows diminishing returns and a ceiling instead of a straight line.",
+      "alternatives": "Linear scaling is simpler but teaches the wrong lesson: that capacity is servers times one server."
+    },
+    {
+      "title": "Price scale-up higher per unit of capacity",
+      "description": "A bigger machine costs 1.5 times more per unit, so the trade-off has a real price as well as a ceiling and a larger blast radius.",
+      "alternatives": "Equal pricing would make scale-up look strictly cheaper, hiding why fleets of small machines exist."
+    }
+  ]
+}

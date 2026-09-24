@@ -1,0 +1,27 @@
+{
+  "id": "f03",
+  "title": "API Design",
+  "subtitle": "An API is a contract, and its shape sets the cost of every screen",
+  "motto": "Shape the API for the caller",
+  "coreAddition": "API styles by caller",
+  "keyInsight": "An API shaped like the database makes every screen pay in round trips and wasted bytes; shaping it for the caller moves that cost to the server.",
+  "concerns": ["latency", "scalability"],
+  "uses": ["f01", "f02"],
+  "sourceNotes": ["01_fundamentals/api_design.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Use one concrete screen as the workload",
+      "description": "A user, their posts and each post's comments is a screen every reader can picture, and it exposes both round trips and over-fetching.",
+      "alternatives": "An abstract request count is simpler but hides why one API style suits one caller and another suits a different one."
+    },
+    {
+      "title": "Include gRPC as the trade-off, not the winner",
+      "description": "gRPC is fastest in the sim, but the frame says it cannot be called from a browser, so learners weigh fit against speed.",
+      "alternatives": "Ranking the styles by speed alone would suggest gRPC everywhere, which is wrong for public web APIs."
+    }
+  ]
+}

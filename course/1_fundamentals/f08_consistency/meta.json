@@ -1,0 +1,27 @@
+{
+  "id": "f08",
+  "title": "Consistency Models",
+  "subtitle": "Consistency is a dial, and quorums let you set it per operation",
+  "motto": "Overlap the write set and the read set",
+  "coreAddition": "quorum reads and writes",
+  "keyInsight": "When the replicas a write reaches and the replicas a read asks must overlap (W + R > N), every read sees the latest write, at the price of waiting for more replicas.",
+  "concerns": ["consistency", "latency", "availability"],
+  "uses": ["f06", "f07"],
+  "sourceNotes": ["01_fundamentals/consistency_models.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": ["Consistency"],
+  "decisions": [
+    {
+      "title": "Compute the stale-read chance exactly",
+      "description": "The chance a read misses the latest write is a small combinatorial formula, so the sim shows an exact number rather than a random sample.",
+      "alternatives": "Running random trials would be noisier and would need a seed, and would hide why the probability drops to exactly zero at W + R > N."
+    },
+    {
+      "title": "Use the same quorum for reads and writes in the main frames",
+      "description": "One quorum slider keeps the model to one idea; the trade-off frame then shows the asymmetric setting (write to all, read from one).",
+      "alternatives": "Separate W and R sliders give more freedom but make it easy to lose the point of the overlap rule."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "f07",
+  "title": "ACID vs BASE",
+  "subtitle": "Some data needs all-or-nothing, and some can wait to agree",
+  "motto": "Match the guarantee to the data",
+  "coreAddition": "transaction",
+  "keyInsight": "A transaction prevents lost money at a cost in throughput, so spend it on data that cannot be repeated and skip it for data that can lag.",
+  "concerns": ["consistency", "latency"],
+  "uses": ["f06"],
+  "sourceNotes": ["01_fundamentals/acid_vs_base.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["payment-system"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Measure lost dollars, not just crashes",
+      "description": "The failure frame reports money lost so the cost of skipping a transaction is a number a learner can feel.",
+      "alternatives": "Counting failed transfers would hide the fact that some failures are invisible, since the system does not know the money is gone."
+    },
+    {
+      "title": "Use a like counter as the BASE example",
+      "description": "A like count is data everyone agrees can be late, so the frame shows BASE being the right call instead of a compromise.",
+      "alternatives": "Using a payment for BASE would suggest eventual consistency is a downgrade rather than a fit for the right data."
+    }
+  ]
+}

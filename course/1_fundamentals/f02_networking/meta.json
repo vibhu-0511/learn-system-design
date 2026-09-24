@@ -1,0 +1,27 @@
+{
+  "id": "f02",
+  "title": "Networking",
+  "subtitle": "A request is a stack of round trips, and each one costs time",
+  "motto": "Count the round trips",
+  "coreAddition": "round-trip budget",
+  "keyInsight": "Most page load time is round trips, not bandwidth, so each protocol generation wins by needing fewer of them.",
+  "concerns": ["latency", "availability"],
+  "uses": ["f01"],
+  "sourceNotes": ["01_fundamentals/networking_basics.md"],
+  "outageRefs": ["dyn_dns_2016", "facebook_bgp_2021"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Model time in round trips",
+      "description": "The sim counts round trips and multiplies by the round-trip time, so the effect of each protocol change is visible without modeling bandwidth.",
+      "alternatives": "A byte-level bandwidth model is closer to a real browser but buries the one idea, that handshakes dominate small requests."
+    },
+    {
+      "title": "Show the worst case beside the average",
+      "description": "The HTTP/3 frame reports the users whose network blocks UDP, so learners see that a faster protocol can have a slower tail.",
+      "alternatives": "Reporting only the happy path would make HTTP/3 look strictly better and hide the fallback cost."
+    }
+  ]
+}
