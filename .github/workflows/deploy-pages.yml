@@ -1,11 +1,8 @@
 name: Deploy to GitHub Pages
 
-# Manual-only while the repo is private: GitHub Pages is unavailable for private
-# repos on a free account, so a push trigger would fail on every commit. When the
-# repo goes public and Pages is set to "GitHub Actions", restore the push trigger:
-#   push:
-#     branches: [main]
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
