@@ -1,0 +1,27 @@
+{
+  "id": "e03",
+  "title": "Scaling a Chat System",
+  "subtitle": "Stop asking the server for messages and let it tell you",
+  "motto": "Poll less, push more, and plan for the reconnect",
+  "coreAddition": "WebSockets",
+  "keyInsight": "Polling wastes almost every request; a persistent connection makes traffic proportional to real messages but turns a restart into a reconnect storm.",
+  "concerns": ["scalability", "latency"],
+  "uses": ["f02", "e01"],
+  "sourceNotes": ["04_system_evolutions/scaling_a_chat_system.md"],
+  "outageRefs": [],
+  "bugScenarioIds": [],
+  "drillCaseIds": ["chat"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Count wasted polls, not just total requests",
+      "description": "The sim reports the share of polls that find nothing, because that is the cost of polling that WebSockets remove.",
+      "alternatives": "Reporting only request rate would show a big number without saying why it is wasteful."
+    },
+    {
+      "title": "Show the reconnect storm as the WebSocket failure",
+      "description": "Long-lived connections fail in a new way, everyone reconnecting together, so the failure frame ties this chapter to the retry pattern in p10.",
+      "alternatives": "A single server crash is less dramatic with a large fleet and would not show the real risk of persistent connections."
+    }
+  ]
+}

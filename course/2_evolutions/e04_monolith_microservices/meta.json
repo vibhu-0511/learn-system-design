@@ -1,0 +1,27 @@
+{
+  "id": "e04",
+  "title": "Monolith to Microservices",
+  "subtitle": "Split by team pain, not by fashion",
+  "motto": "Start with a monolith, and extract a service only when you can name the pain",
+  "coreAddition": "team-size trade-off",
+  "keyInsight": "Splitting into services trades coordination loss for a platform tax, so it only pays once the team is large enough for the coordination loss to dominate.",
+  "concerns": ["scalability", "cost"],
+  "uses": ["e01", "f01"],
+  "sourceNotes": ["04_system_evolutions/from_monolith_to_microservices.md"],
+  "outageRefs": ["tsb_2018"],
+  "bugScenarioIds": ["premature-microservices"],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Model the team, not the servers",
+      "description": "The sim counts productive engineers, because the note's argument is about people: coordination loss against platform overhead.",
+      "alternatives": "A server-capacity model would miss that the main cost of splitting too early is engineering time, not machines."
+    },
+    {
+      "title": "Put a modular monolith between the two extremes",
+      "description": "A modular monolith halves coordination loss with no new infrastructure, showing that the choice is not monolith versus microservices.",
+      "alternatives": "Comparing only a monolith and full microservices would make it look like a leap that must be taken all at once."
+    }
+  ]
+}

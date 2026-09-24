@@ -1,0 +1,27 @@
+{
+  "id": "e02",
+  "title": "Scaling a Database",
+  "subtitle": "Reads scale out; writes need to be split",
+  "motto": "Replicas cure read pain and do nothing for writes",
+  "coreAddition": "read replicas, then shards",
+  "keyInsight": "Replicas scale reads but every write still goes to one primary, so scaling writes means splitting the data, at the price of cross-shard queries.",
+  "concerns": ["scalability", "consistency"],
+  "uses": ["e01", "f05", "f06"],
+  "sourceNotes": ["04_system_evolutions/scaling_a_database.md"],
+  "outageRefs": ["discord_db_2024"],
+  "bugScenarioIds": [],
+  "drillCaseIds": [],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Grow writes, not reads, in the failure frame",
+      "description": "Replicas already fixed the read load, so the failure quadruples writes to show exactly the case replicas cannot help.",
+      "alternatives": "Growing both together would blur which fix addresses which problem."
+    },
+    {
+      "title": "Make replication lag depend on primary load",
+      "description": "Lag rises as the primary gets busier and hits a ceiling when it saturates, so the consistency cost of replicas is visible.",
+      "alternatives": "A fixed lag figure is simpler but would not show that overloading the primary makes replicas fall further behind."
+    }
+  ]
+}

@@ -35,7 +35,7 @@ It contains no code on purpose. Each task names the files, contracts and checks 
 | P2 Pilot (f04, b04, p10) ✋ | done. The user later said "continue", which was taken as approval to proceed. | `4173e70` |
 | P3 Port gym + Library | done. See §0.6 for what changed and what is still unverified. | see git log |
 | P4-F Fundamentals (8) | done (f01–f08). f04 came from the pilot. | see git log |
-| P4-E Evolutions (4) | todo | |
+| P4-E Evolutions (4) | done (e01–e04) | see git log |
 | P4-B Building blocks (12) | todo | |
 | P4-P Patterns (19) | todo | |
 | P4-T Trade-offs (7) | todo | |

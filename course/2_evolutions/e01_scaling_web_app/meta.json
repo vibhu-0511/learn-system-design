@@ -1,0 +1,27 @@
+{
+  "id": "e01",
+  "title": "Scaling a Web App",
+  "subtitle": "A ladder of bottlenecks, where each rung adds one building block",
+  "motto": "Add the next block only when the last one breaks",
+  "coreAddition": "load balancer, cache and read replicas",
+  "keyInsight": "Each building block moves the bottleneck instead of removing it, so add the next one only when the current one saturates.",
+  "concerns": ["scalability", "cost"],
+  "uses": ["f01", "f04", "f05"],
+  "sourceNotes": ["04_system_evolutions/scaling_a_web_app.md"],
+  "outageRefs": [],
+  "bugScenarioIds": ["photo-gallery-overload"],
+  "drillCaseIds": ["url-shortener"],
+  "terms": [],
+  "decisions": [
+    {
+      "title": "Model stages 2 to 5 of the ladder, not all ten",
+      "description": "The sim covers the load balancer, cache and read replicas, where the numbers are concrete and one variable (the database load) tells the story.",
+      "alternatives": "Simulating all ten stages, including sharding and multi-region, would need many invented parameters and bury the idea that each block moves the bottleneck."
+    },
+    {
+      "title": "Use the note's ballpark capacities and prices",
+      "description": "An app server at 1,000 req/s and a database at 5,000 queries/s, with monthly prices, keep the numbers traceable to the vault.",
+      "alternatives": "Round abstract units would be simpler but would not let learners compare the cost of each rung with real budgets."
+    }
+  ]
+}
